@@ -1,0 +1,208 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-1",
+        "name": "Mansarovar — Dravyavati Corridor",
+        "severity": "critical",
+        "type": "flood",
+        "risk_score": 92,
+        "affected_population": 45000,
+        "elevation_m": 412,
+        "dist_to_water_km": 0.3,
+        "soil_drainage": 1,
+        "historical_floods": 8,
+        "population_density": 18000,
+        "updated_at": "2024-08-15T10:30:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.7350, 26.8620],
+          [75.7450, 26.8650],
+          [75.7600, 26.8630],
+          [75.7620, 26.8530],
+          [75.7480, 26.8460],
+          [75.7350, 26.8490],
+          [75.7350, 26.8620]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-2",
+        "name": "Pratap Nagar",
+        "severity": "high",
+        "type": "flood",
+        "risk_score": 78,
+        "affected_population": 32000,
+        "elevation_m": 415,
+        "dist_to_water_km": 0.8,
+        "soil_drainage": 2,
+        "historical_floods": 5,
+        "population_density": 14000,
+        "updated_at": "2024-08-15T10:15:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.7480, 26.8380],
+          [75.7620, 26.8400],
+          [75.7720, 26.8360],
+          [75.7700, 26.8220],
+          [75.7540, 26.8200],
+          [75.7420, 26.8250],
+          [75.7480, 26.8380]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-3",
+        "name": "Sindhi Camp — Urban Flood Zone",
+        "severity": "high",
+        "type": "waterlog",
+        "risk_score": 74,
+        "affected_population": 18000,
+        "elevation_m": 431,
+        "dist_to_water_km": 2.1,
+        "soil_drainage": 1,
+        "historical_floods": 6,
+        "population_density": 32000,
+        "updated_at": "2024-08-15T10:45:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.7820, 26.9230],
+          [75.7920, 26.9260],
+          [75.8020, 26.9230],
+          [75.8010, 26.9110],
+          [75.7880, 26.9080],
+          [75.7790, 26.9120],
+          [75.7820, 26.9230]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-4",
+        "name": "Walled City — Pink City",
+        "severity": "medium",
+        "type": "waterlog",
+        "risk_score": 58,
+        "affected_population": 72000,
+        "elevation_m": 435,
+        "dist_to_water_km": 3.2,
+        "soil_drainage": 1,
+        "historical_floods": 4,
+        "population_density": 45000,
+        "updated_at": "2024-08-15T09:00:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.8080, 26.9320],
+          [75.8200, 26.9350],
+          [75.8380, 26.9320],
+          [75.8400, 26.9170],
+          [75.8250, 26.9140],
+          [75.8090, 26.9180],
+          [75.8080, 26.9320]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-5",
+        "name": "Sanganer — Amanishah Nala Confluence",
+        "severity": "critical",
+        "type": "flood",
+        "risk_score": 88,
+        "affected_population": 28000,
+        "elevation_m": 408,
+        "dist_to_water_km": 0.1,
+        "soil_drainage": 1,
+        "historical_floods": 9,
+        "population_density": 12000,
+        "updated_at": "2024-08-15T11:00:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.7880, 26.8040],
+          [75.8000, 26.8060],
+          [75.8120, 26.8020],
+          [75.8100, 26.7870],
+          [75.7960, 26.7840],
+          [75.7840, 26.7890],
+          [75.7880, 26.8040]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-6",
+        "name": "Jagatpura — Low-lying Development",
+        "severity": "medium",
+        "type": "waterlog",
+        "risk_score": 62,
+        "affected_population": 22000,
+        "elevation_m": 418,
+        "dist_to_water_km": 1.8,
+        "soil_drainage": 2,
+        "historical_floods": 3,
+        "population_density": 9000,
+        "updated_at": "2024-08-15T08:30:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.8280, 26.8230],
+          [75.8420, 26.8250],
+          [75.8530, 26.8210],
+          [75.8510, 26.8060],
+          [75.8360, 26.8040],
+          [75.8250, 26.8080],
+          [75.8280, 26.8230]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "hz-7",
+        "name": "Malviya Nagar — Dravyavati Waterlogging",
+        "severity": "low",
+        "type": "waterlog",
+        "risk_score": 38,
+        "affected_population": 15000,
+        "elevation_m": 425,
+        "dist_to_water_km": 1.2,
+        "soil_drainage": 3,
+        "historical_floods": 2,
+        "population_density": 11000,
+        "updated_at": "2024-08-15T07:00:00Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [75.7980, 26.8620],
+          [75.8120, 26.8650],
+          [75.8230, 26.8610],
+          [75.8210, 26.8480],
+          [75.8060, 26.8460],
+          [75.7960, 26.8500],
+          [75.7980, 26.8620]
+        ]]
+      }
+    }
+  ]
+}

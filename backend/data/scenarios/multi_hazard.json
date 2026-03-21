@@ -1,0 +1,85 @@
+{
+  "id": "multi_hazard",
+  "name": "Multi-Hazard Event",
+  "description": "Combination of river flooding, road collapse near Sanganer, and power outage at Jagatpura.",
+  "total_duration_sec": 90,
+  "steps": [
+    {
+      "delay_sec": 0,
+      "zone_id": "hz-5",
+      "new_severity": "critical",
+      "alert": {
+        "title": "CRITICAL: Sanganer Nala Overflowing",
+        "description": "Amanishah Nala has breached banks near Sanganer. 28,000 residents at immediate risk.",
+        "severity": "critical",
+        "location": "Sanganer, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 15,
+      "zone_id": "hz-6",
+      "new_severity": "high",
+      "alert": {
+        "title": "POWER OUTAGE: Jagatpura Substation Flooded",
+        "description": "Electricity supply disrupted across Jagatpura and surrounding 8 sectors. Estimated restoration: 4-6 hours.",
+        "severity": "high",
+        "location": "Jagatpura, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 30,
+      "zone_id": "hz-1",
+      "new_severity": "critical",
+      "alert": {
+        "title": "ROAD COLLAPSE: Dravyavati Bridge Unsafe",
+        "description": "Structural damage detected at Dravyavati bridge near Sanganer crossing. Bridge sealed immediately.",
+        "severity": "critical",
+        "location": "Dravyavati Bridge, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 45,
+      "zone_id": "hz-5",
+      "new_severity": "critical",
+      "alert": {
+        "title": "RESCUE OPS: NDRF Deployed at Sanganer",
+        "description": "45-member NDRF team with 6 rescue boats deployed. Helicopter rescue requested for isolated residents.",
+        "severity": "critical",
+        "location": "Sanganer, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 60,
+      "zone_id": "hz-6",
+      "new_severity": "critical",
+      "alert": {
+        "title": "CRITICAL: Jagatpura Fully Inundated",
+        "description": "Water depth 1.2m in Jagatpura sectors 4-8. Emergency evacuation by boat only. Call 112 for assistance.",
+        "severity": "critical",
+        "location": "Jagatpura, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 75,
+      "zone_id": "hz-2",
+      "new_severity": "high",
+      "alert": {
+        "title": "WARNING: Cascading Flood Risk — Pratap Nagar",
+        "description": "Floodwater from Sanganer nala reaching Pratap Nagar via low-lying channels. Precautionary evacuation.",
+        "severity": "high",
+        "location": "Pratap Nagar, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 90,
+      "zone_id": "hz-5",
+      "new_severity": "critical",
+      "alert": {
+        "title": "MAXIMUM ALERT: Multi-Zone Emergency Active",
+        "description": "5 zones now at HIGH or CRITICAL. All available shelters operational. Evacuate immediately via designated routes.",
+        "severity": "critical",
+        "location": "Jaipur City-wide"
+      }
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "shelter-1",
+    "name": "SMS Stadium",
+    "lat": 26.9024,
+    "lng": 75.8065,
+    "capacity": 500,
+    "current_occupancy": 120,
+    "amenities": ["Food", "Water", "Medical", "Electricity", "Toilets"],
+    "contact": "+91-141-2385071",
+    "status": "open",
+    "address": "Bhawani Singh Road, Jaipur, Rajasthan 302001"
+  },
+  {
+    "id": "shelter-2",
+    "name": "Birla Auditorium",
+    "lat": 26.8936,
+    "lng": 75.8064,
+    "capacity": 300,
+    "current_occupancy": 180,
+    "amenities": ["Food", "Water", "Electricity"],
+    "contact": "+91-141-2385200",
+    "status": "open",
+    "address": "Statue Circle, Jaipur, Rajasthan 302005"
+  },
+  {
+    "id": "shelter-3",
+    "name": "Rajasthan University Hall",
+    "lat": 26.8585,
+    "lng": 75.7612,
+    "capacity": 250,
+    "current_occupancy": 60,
+    "amenities": ["Food", "Water", "Medical"],
+    "contact": "+91-141-2711070",
+    "status": "open",
+    "address": "JLN Marg, Jaipur, Rajasthan 302004"
+  },
+  {
+    "id": "shelter-4",
+    "name": "Jawahar Kala Kendra",
+    "lat": 26.8893,
+    "lng": 75.8133,
+    "capacity": 400,
+    "current_occupancy": 95,
+    "amenities": ["Food", "Water", "Electricity", "Toilets"],
+    "contact": "+91-141-2700501",
+    "status": "open",
+    "address": "Jawahar Lal Nehru Marg, Jaipur, Rajasthan 302017"
+  },
+  {
+    "id": "shelter-5",
+    "name": "Albert Hall Museum Ground",
+    "lat": 26.9117,
+    "lng": 75.8194,
+    "capacity": 350,
+    "current_occupancy": 210,
+    "amenities": ["Food", "Water", "Medical", "Toilets"],
+    "contact": "+91-141-2657257",
+    "status": "open",
+    "address": "Ram Niwas Garden, Jaipur, Rajasthan 302004"
+  },
+  {
+    "id": "shelter-6",
+    "name": "Sawai Mansingh Indoor Stadium",
+    "lat": 26.9030,
+    "lng": 75.8050,
+    "capacity": 200,
+    "current_occupancy": 180,
+    "amenities": ["Water", "Electricity"],
+    "contact": "+91-141-2385072",
+    "status": "limited",
+    "address": "Bhawani Singh Road, Jaipur, Rajasthan 302001"
+  },
+  {
+    "id": "shelter-7",
+    "name": "Rajasthan International Center",
+    "lat": 26.8780,
+    "lng": 75.7960,
+    "capacity": 150,
+    "current_occupancy": 30,
+    "amenities": ["Food", "Water", "Medical", "Electricity", "Toilets"],
+    "contact": "+91-141-2385300",
+    "status": "open",
+    "address": "Dhuleshwar Garden, Jaipur, Rajasthan 302004"
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "id": "monsoon_flood",
+  "name": "Monsoon Flooding",
+  "description": "Dravyavati river rises to danger level. Zones escalate progressively over 60 seconds.",
+  "total_duration_sec": 60,
+  "steps": [
+    {
+      "delay_sec": 0,
+      "zone_id": "hz-1",
+      "new_severity": "critical",
+      "alert": {
+        "title": "CRITICAL: Dravyavati River Rising",
+        "description": "Dravyavati river water level at 87% capacity. Mansarovar area immediate evacuation ordered.",
+        "severity": "critical",
+        "location": "Mansarovar, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 15,
+      "zone_id": "hz-2",
+      "new_severity": "high",
+      "alert": {
+        "title": "WARNING: Pratap Nagar Flooding",
+        "description": "Floodwater from Dravyavati corridor reaching Pratap Nagar. Residents on ground floor must evacuate.",
+        "severity": "high",
+        "location": "Pratap Nagar, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 30,
+      "zone_id": "hz-7",
+      "new_severity": "medium",
+      "alert": {
+        "title": "WATCH: Malviya Nagar Waterlogging",
+        "description": "Water levels rising in Malviya Nagar near Dravyavati. Monitoring continues.",
+        "severity": "warning",
+        "location": "Malviya Nagar, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 45,
+      "zone_id": "hz-1",
+      "new_severity": "critical",
+      "alert": {
+        "title": "EMERGENCY: Dravyavati Overflow Confirmed",
+        "description": "River has overflowed banks at 3 points. NDRF deployed. All residents must evacuate immediately.",
+        "severity": "critical",
+        "location": "Dravyavati River, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 60,
+      "zone_id": "hz-2",
+      "new_severity": "critical",
+      "alert": {
+        "title": "CRITICAL: Pratap Nagar Submerged",
+        "description": "Ground floor submersion reported at 45+ locations in Pratap Nagar. Rescue boats deployed.",
+        "severity": "critical",
+        "location": "Pratap Nagar, Jaipur"
+      }
+    }
+  ]
+}

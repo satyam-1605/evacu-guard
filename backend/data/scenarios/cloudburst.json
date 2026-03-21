@@ -1,0 +1,52 @@
+{
+  "id": "cloudburst",
+  "name": "Cloudburst",
+  "description": "Sudden 80mm/hr rainfall hits the old city. Instant flooding in Walled City and Sindhi Camp.",
+  "total_duration_sec": 30,
+  "steps": [
+    {
+      "delay_sec": 0,
+      "zone_id": "hz-3",
+      "new_severity": "critical",
+      "alert": {
+        "title": "CLOUDBURST: Sindhi Camp Flash Flood",
+        "description": "80mm/hr rainfall has caused flash flooding at Sindhi Camp. All roads submerged. Evacuate immediately.",
+        "severity": "critical",
+        "location": "Sindhi Camp, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 10,
+      "zone_id": "hz-4",
+      "new_severity": "high",
+      "alert": {
+        "title": "FLOOD: Walled City Drainage Overwhelmed",
+        "description": "Old city drainage system has failed. Johari Bazaar and Chandpol Gate areas flooded.",
+        "severity": "high",
+        "location": "Walled City — Pink City, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 20,
+      "zone_id": "hz-3",
+      "new_severity": "critical",
+      "alert": {
+        "title": "ROAD BLOCK: MI Road Underpass Closed",
+        "description": "MI Road underpass completely submerged. All traffic diverted via Tonk Road.",
+        "severity": "critical",
+        "location": "MI Road, Jaipur"
+      }
+    },
+    {
+      "delay_sec": 30,
+      "zone_id": "hz-4",
+      "new_severity": "critical",
+      "alert": {
+        "title": "EMERGENCY: Heritage Zone Evacuation",
+        "description": "Walled City declared emergency zone. Heritage structures at risk. Full evacuation ordered.",
+        "severity": "critical",
+        "location": "Walled City, Jaipur"
+      }
+    }
+  ]
+}
