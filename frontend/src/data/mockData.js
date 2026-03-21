@@ -252,7 +252,9 @@ export const mockAlerts = [
   {
     id: "alert-1",
     title: "Heavy Rainfall — Mansarovar",
+    title_hi: "भारी वर्षा — मानसरोवर",
     description: "45mm/hr rainfall detected. Dravyavati river water level at 87% capacity. Immediate evacuation advised for low-lying areas.",
+    description_hi: "45mm/hr वर्षा दर्ज। द्रव्यवती नदी जलस्तर 87% क्षमता पर। निचले क्षेत्रों में तत्काल निकासी की सलाह।",
     severity: "critical",
     location: "Mansarovar, Jaipur",
     type: "flood",
@@ -261,7 +263,9 @@ export const mockAlerts = [
   {
     id: "alert-2",
     title: "Route Blocked — MI Road Underpass",
+    title_hi: "मार्ग अवरुद्ध — MI रोड अंडरपास",
     description: "MI Road underpass completely waterlogged. Alternate routes via Tonk Road and Ajmer Road active. Avoid area.",
+    description_hi: "MI रोड अंडरपास पूरी तरह जलभराव से भरा। टोंक रोड और अजमेर रोड से वैकल्पिक मार्ग सक्रिय। क्षेत्र से बचें।",
     severity: "high",
     location: "MI Road, Jaipur",
     type: "road_block",
@@ -270,7 +274,9 @@ export const mockAlerts = [
   {
     id: "alert-3",
     title: "IMD Orange Alert — Jaipur District",
+    title_hi: "IMD ऑरेंज अलर्ट — जयपुर जिला",
     description: "India Meteorological Department has issued Orange Alert for Jaipur. Rainfall forecast: 65-115mm in next 6 hours.",
+    description_hi: "भारत मौसम विज्ञान विभाग ने जयपुर के लिए ऑरेंज अलर्ट जारी किया। वर्षा पूर्वानुमान: अगले 6 घंटों में 65-115mm।",
     severity: "warning",
     location: "Jaipur District",
     type: "weather",
@@ -279,7 +285,9 @@ export const mockAlerts = [
   {
     id: "alert-4",
     title: "Shelter Capacity Update — SMS Stadium",
+    title_hi: "आश्रय क्षमता अपडेट — SMS स्टेडियम",
     description: "SMS Stadium shelter at 24% capacity. 380 spaces still available. Directing evacuees from Mansarovar zone.",
+    description_hi: "SMS स्टेडियम आश्रय 24% क्षमता पर। 380 स्थान अभी भी उपलब्ध। मानसरोवर क्षेत्र से निकासी प्रभावितों को निर्देशित किया जा रहा है।",
     severity: "info",
     location: "SMS Stadium",
     type: "shelter",
@@ -288,7 +296,9 @@ export const mockAlerts = [
   {
     id: "alert-5",
     title: "Sanganer Zone Escalated to CRITICAL",
+    title_hi: "सांगानेर क्षेत्र गंभीर स्तर पर",
     description: "Amanishah Nala overflowing near Sanganer. 28,000 residents at risk. Emergency services deployed. Evacuate immediately.",
+    description_hi: "सांगानेर के पास अमानीशाह नाला उफान पर। 28,000 निवासी खतरे में। आपातकालीन सेवाएँ तैनात। तत्काल निकासी करें।",
     severity: "critical",
     location: "Sanganer, Jaipur",
     type: "flood",
@@ -297,7 +307,9 @@ export const mockAlerts = [
   {
     id: "alert-6",
     title: "Power Outage — Jagatpura",
+    title_hi: "बिजली कटौती — जगतपुरा",
     description: "Electricity supply disrupted in Jagatpura and surrounding areas due to flooding of substation. Estimated restoration: 4 hours.",
+    description_hi: "सबस्टेशन में बाढ़ के कारण जगतपुरा और आसपास के क्षेत्रों में बिजली आपूर्ति बाधित। अनुमानित बहाली: 4 घंटे।",
     severity: "warning",
     location: "Jagatpura, Jaipur",
     type: "infrastructure",
@@ -306,7 +318,9 @@ export const mockAlerts = [
   {
     id: "alert-7",
     title: "Relief Camp Operational — Albert Hall",
+    title_hi: "राहत शिविर चालू — अल्बर्ट हॉल",
     description: "Jaipur District Administration has opened relief camp at Albert Hall Museum Ground. Food and medical aid available 24/7.",
+    description_hi: "जयपुर जिला प्रशासन ने अल्बर्ट हॉल म्यूजियम ग्राउंड पर राहत शिविर खोला। भोजन और चिकित्सा सहायता 24/7 उपलब्ध।",
     severity: "info",
     location: "Albert Hall, Jaipur",
     type: "relief",
@@ -315,7 +329,9 @@ export const mockAlerts = [
   {
     id: "alert-8",
     title: "Bridge Alert — Dravyavati River",
+    title_hi: "पुल अलर्ट — द्रव्यवती नदी",
     description: "Water level near Dravyavati bridge at 93% danger mark. Bridge closed for heavy vehicles. Pedestrians advised to use Jawahar Bridge.",
+    description_hi: "द्रव्यवती पुल के पास जलस्तर 93% खतरे के निशान पर। भारी वाहनों के लिए पुल बंद। पैदल यात्रियों को जवाहर पुल उपयोग करने की सलाह।",
     severity: "high",
     location: "Dravyavati Bridge",
     type: "flood",
@@ -324,7 +340,9 @@ export const mockAlerts = [
   {
     id: "alert-9",
     title: "Walled City Drainage Overwhelmed",
+    title_hi: "पुराने शहर की नाली प्रणाली बाधित",
     description: "Old city drainage system unable to handle current rainfall volume. Water entering ground floor properties near Johari Bazaar and Chandpol.",
+    description_hi: "पुराने शहर की नाली प्रणाली वर्तमान वर्षा मात्रा को संभालने में असमर्थ। जौहरी बाजार और चांदपोल के पास भूतल में पानी घुस रहा है।",
     severity: "warning",
     location: "Walled City, Jaipur",
     type: "waterlog",
@@ -333,7 +351,9 @@ export const mockAlerts = [
   {
     id: "alert-10",
     title: "NDRF Team Deployed — Pratap Nagar",
+    title_hi: "NDRF टीम तैनात — प्रताप नगर",
     description: "National Disaster Response Force team of 45 personnel deployed at Pratap Nagar for rescue operations. Rescue boats operational.",
+    description_hi: "राष्ट्रीय आपदा प्रतिक्रिया बल की 45 कर्मियों की टीम प्रताप नगर में बचाव कार्य के लिए तैनात। रेस्क्यू नावें चालू।",
     severity: "info",
     location: "Pratap Nagar, Jaipur",
     type: "rescue",

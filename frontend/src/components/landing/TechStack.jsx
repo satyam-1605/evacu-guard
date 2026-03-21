@@ -37,17 +37,20 @@ function TechBadge({ name, color }) {
   );
 }
 
+import { useTranslation } from 'react-i18next';
+
 export default function TechStack() {
+  const { t } = useTranslation();
   const doubled = [...techs, ...techs];
 
   return (
     <section id="tech-stack" className="py-20 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
       <div className="mb-12 text-center">
         <p className="text-xs tracking-widest uppercase mb-3 font-jetbrains" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-          — Powered by —
+          {t('techStack.poweredBy')}
         </p>
         <h2 className="text-3xl font-bold" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-          Tech Stack
+          {t('techStack.title')}
         </h2>
       </div>
 

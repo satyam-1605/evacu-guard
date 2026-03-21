@@ -22,9 +22,10 @@ from services.risk_engine import risk_engine
 from services.weather_client import fetch_weather, get_cached_weather
 from services.alert_manager import alert_manager
 from routers.hazards import get_hazard_state, update_zone_severity
+from database.init_db import init_database
 
 # ── Import routers ───────────────────────────────────────────────────────────
-from routers import hazards, shelters, routing, alerts, reports, admin, weather, stats
+from routers import hazards, shelters, routing, alerts, reports, admin, weather, stats, auth
 
 
 # ── Background weather polling task ─────────────────────────────────────────
@@ -111,6 +112,9 @@ async def lifespan(app: FastAPI):
     """Startup and shutdown events."""
     print("[EvacuGuard] Starting up...")
 
+    # Initialize database
+    await init_database()
+
     # Load ML model
     risk_engine.load()
 
@@ -143,16 +147,11 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS
+# CORS — allow all localhost ports (Vite picks a free port each time)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5173",
-        os.getenv("FRONTEND_URL", "http://localhost:5173"),
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -168,6 +167,7 @@ app.include_router(reports.router)
 app.include_router(admin.router)
 app.include_router(weather.router)
 app.include_router(stats.router)
+app.include_router(auth.router, prefix="/api")
 
 
 # ── Root & health endpoints ──────────────────────────────────────────────────

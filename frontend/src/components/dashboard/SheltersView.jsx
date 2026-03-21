@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion';
 import { Navigation, Users, Phone, MapPin, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { mockShelters } from '../../data/mockData';
 import GlowButton from '../shared/GlowButton';
 
 function CapacityBar({ current, total }) {
+  const { t } = useTranslation();
   const pct = Math.round((current / total) * 100);
   const color = pct > 80 ? '#ef4444' : pct > 50 ? '#f59e0b' : '#10b981';
   return (
     <div>
       <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-        <span>{current} / {total} occupancy</span>
+        <span>{t('sheltersView.occupancy', { current, total })}</span>
         <span style={{ color }}>{pct}%</span>
       </div>
       <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
@@ -26,22 +28,26 @@ function CapacityBar({ current, total }) {
 }
 
 export default function SheltersView({ onNavigate }) {
+  const { t } = useTranslation();
+  const operationalCount = mockShelters.filter(s => s.status === 'open').length;
+  const availableSpaces = mockShelters.reduce((a, s) => a + (s.capacity - s.current_occupancy), 0);
+
   return (
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-xl font-bold tracking-wide" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-            Evacuation Shelters
+            {t('sheltersView.title')}
           </h2>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
-            {mockShelters.filter(s => s.status === 'open').length} shelters operational · Jaipur District
+            {t('sheltersView.subtitle', { count: operationalCount })}
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)' }}>
           <ShieldCheck size={14} color="#10b981" />
           <span className="text-xs font-bold" style={{ color: '#10b981', fontFamily: "'JetBrains Mono', monospace" }}>
-            {mockShelters.reduce((a, s) => a + (s.capacity - s.current_occupancy), 0)} spaces available
+            {t('sheltersView.spacesAvailable', { count: availableSpaces })}
           </span>
         </div>
       </div>
@@ -49,7 +55,6 @@ export default function SheltersView({ onNavigate }) {
       {/* Shelter grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {mockShelters.map((shelter, i) => {
-          const pct = Math.round((shelter.current_occupancy / shelter.capacity) * 100);
           const statusColor = shelter.status === 'open' ? '#10b981' : shelter.status === 'limited' ? '#f59e0b' : '#ef4444';
 
           return (
@@ -74,7 +79,7 @@ export default function SheltersView({ onNavigate }) {
                   <div className="flex items-center gap-1.5">
                     <MapPin size={11} color="var(--text-muted)" />
                     <span className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-                      {shelter.distance_km} km away
+                      {t('sheltersView.kmAway', { km: shelter.distance_km })}
                     </span>
                   </div>
                 </div>
@@ -122,7 +127,7 @@ export default function SheltersView({ onNavigate }) {
                   icon={Navigation}
                   onClick={() => onNavigate?.(shelter)}
                 >
-                  Navigate
+                  {t('sheltersView.navigate')}
                 </GlowButton>
               </div>
             </motion.div>

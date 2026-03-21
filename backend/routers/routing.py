@@ -1,14 +1,16 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from models.schemas import RouteRequest, RouteOut
 from services.shelter_matcher import find_best_shelter, get_shelter_by_id
 from services.route_planner import plan_route
 from routers.hazards import get_hazard_state
+from auth.dependencies import get_optional_user
+from database.queries import create_evacuation_log
 
 router = APIRouter(prefix="/api/route", tags=["routing"])
 
 
 @router.post("", response_model=None)
-async def compute_route(body: RouteRequest):
+async def compute_route(body: RouteRequest, user: dict = Depends(get_optional_user)):
     """Compute safe evacuation route from user location to nearest/specified shelter."""
     # Get target shelter
     if body.shelter_id:
@@ -31,6 +33,16 @@ async def compute_route(body: RouteRequest):
         shelter=shelter,
         hazards=hazards,
     )
+
+    # Log evacuation route for authenticated users
+    if user is not None:
+        try:
+            await create_evacuation_log(
+                user["id"], body.lat, body.lng, shelter["id"],
+                result.get("distance_km"), result.get("eta_minutes"), "safest"
+            )
+        except Exception:
+            pass  # Non-critical; don't fail the route response
 
     return {
         **result,

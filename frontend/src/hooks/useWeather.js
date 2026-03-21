@@ -1,7 +1,4 @@
-/**
- * useWeather — polls /api/weather every 5 minutes.
- * Falls back to mockWeather when backend is offline.
- */
+// useWeather — polls /api/weather every 5 minutes. Falls back to mockWeather when backend is offline.
 import { useState, useEffect, useRef } from 'react';
 import { fetchWeather } from '../services/api';
 import { mockWeather } from '../data/mockData';
@@ -34,6 +31,7 @@ export function useWeather() {
   }
 
   useEffect(() => {
+    unmounted.current = false;
     load();
     timerRef.current = setInterval(load, POLL_INTERVAL_MS);
     return () => {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { mockAlerts, severityConfig, formatTimeAgo } from '../../data/mockData';
 import { Siren, Filter } from 'lucide-react';
 
@@ -7,6 +8,8 @@ const FILTERS = ['all', 'critical', 'high', 'warning', 'info'];
 
 export default function AlertsView() {
   const [filter, setFilter] = useState('all');
+  const { t, i18n } = useTranslation();
+  const isHindi = i18n.language?.startsWith('hi');
 
   const filtered = filter === 'all'
     ? mockAlerts
@@ -23,10 +26,10 @@ export default function AlertsView() {
           />
           <div>
             <h2 className="text-xl font-bold tracking-wide" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-              Live Alert Feed
+              {t('alertsView.title')}
             </h2>
             <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
-              Real-time emergency notifications · Jaipur District
+              {t('alertsView.subtitle')}
             </p>
           </div>
         </div>
@@ -34,7 +37,7 @@ export default function AlertsView() {
           className="text-xs px-3 py-1 rounded-full font-bold"
           style={{ background: 'rgba(239,68,68,0.12)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.25)', fontFamily: "'JetBrains Mono', monospace" }}
         >
-          {mockAlerts.length} ACTIVE
+          {mockAlerts.length} {t('alertsView.active')}
         </span>
       </div>
 
@@ -45,6 +48,7 @@ export default function AlertsView() {
           {FILTERS.map((f) => {
             const cfg = f === 'all' ? null : severityConfig[f];
             const isActive = filter === f;
+            const label = f === 'all' ? t('alertsView.filterAll') : f.toUpperCase();
             return (
               <button
                 key={f}
@@ -61,7 +65,7 @@ export default function AlertsView() {
                   border: `1px solid ${isActive ? (cfg ? cfg.border : 'rgba(255,255,255,0.2)') : 'rgba(255,255,255,0.06)'}`,
                 }}
               >
-                {f.toUpperCase()}
+                {label}
               </button>
             );
           })}
@@ -73,6 +77,8 @@ export default function AlertsView() {
         <AnimatePresence mode="popLayout">
           {filtered.map((alert, i) => {
             const cfg = severityConfig[alert.severity] || severityConfig.info;
+            const title = isHindi ? (alert.title_hi || alert.title) : alert.title;
+            const description = isHindi ? (alert.description_hi || alert.description) : alert.description;
             return (
               <motion.div
                 key={alert.id}
@@ -91,7 +97,7 @@ export default function AlertsView() {
               >
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <span className="text-sm font-bold leading-snug flex-1" style={{ color: 'var(--text-primary)', fontFamily: "'Exo 2', sans-serif" }}>
-                    {alert.title}
+                    {title}
                   </span>
                   <span
                     className="text-xs px-2 py-0.5 rounded font-bold flex-shrink-0"
@@ -102,7 +108,7 @@ export default function AlertsView() {
                 </div>
 
                 <p className="text-sm leading-relaxed mb-3" style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}>
-                  {alert.description}
+                  {description}
                 </p>
 
                 <div className="flex items-center justify-between">
@@ -128,7 +134,7 @@ export default function AlertsView() {
 
         {filtered.length === 0 && (
           <div className="text-center py-16" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
-            No {filter} alerts at this time
+            {t('alertsView.noAlerts', { filter })}
           </div>
         )}
       </div>

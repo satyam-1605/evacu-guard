@@ -1,35 +1,15 @@
 import { motion } from 'framer-motion';
 import { Radio, Brain, Map, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-const steps = [
-  {
-    num: '01',
-    icon: Radio,
-    title: 'Real-time Monitoring',
-    desc: 'Open-Meteo API streams live rainfall and weather data every 5 minutes. Jaipur flood zones tracked continuously.',
-    accent: '#3b82f6',
-  },
-  {
-    num: '02',
-    icon: Brain,
-    title: 'AI Risk Scoring',
-    desc: 'Random Forest model analyzes elevation, rainfall, soil drainage, and 3 more features to classify each zone.',
-    accent: '#9333ea',
-  },
-  {
-    num: '03',
-    icon: Map,
-    title: 'Smart Route Planning',
-    desc: 'NetworkX Dijkstra algorithm weights roads by hazard level. OSRM provides road-snapped real coordinates.',
-    accent: '#f59e0b',
-  },
-  {
-    num: '04',
-    icon: ShieldCheck,
-    title: 'Safe Evacuation',
-    desc: 'Citizens get instant routes to nearest available shelter with live capacity tracking and turn-by-turn guidance.',
-    accent: '#10b981',
-  },
+const STEP_ICONS = [Radio, Brain, Map, ShieldCheck];
+const STEP_ACCENTS = ['#3b82f6', '#9333ea', '#f59e0b', '#10b981'];
+const STEP_NUMS = ['01', '02', '03', '04'];
+const STEP_KEYS = [
+  ['step1Title', 'step1Desc'],
+  ['step2Title', 'step2Desc'],
+  ['step3Title', 'step3Desc'],
+  ['step4Title', 'step4Desc'],
 ];
 
 const containerVariants = {
@@ -43,6 +23,16 @@ const itemVariants = {
 };
 
 export default function HowItWorks() {
+  const { t } = useTranslation();
+
+  const steps = STEP_KEYS.map(([titleKey, descKey], i) => ({
+    num: STEP_NUMS[i],
+    icon: STEP_ICONS[i],
+    title: t(`howItWorks.${titleKey}`),
+    desc: t(`howItWorks.${descKey}`),
+    accent: STEP_ACCENTS[i],
+  }));
+
   return (
     <section id="how-it-works" className="relative py-28 px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
       {/* Grid background */}
@@ -58,13 +48,13 @@ export default function HowItWorks() {
           className="text-center mb-20"
         >
           <p className="text-xs tracking-widest uppercase text-emerald-400 mb-4 font-jetbrains" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            — System Architecture —
+            {t('howItWorks.sectionLabel')}
           </p>
           <h2
             className="text-5xl font-bold mb-4"
             style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}
           >
-            How EvacuGuard Works
+            {t('howItWorks.title')}
           </h2>
           <div className="flex items-center justify-center gap-4 mt-4">
             <div className="h-px w-32 bg-gradient-to-r from-transparent to-emerald-500/40" />

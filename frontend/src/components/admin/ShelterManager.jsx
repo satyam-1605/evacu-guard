@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { mockShelters } from '../../data/mockData';
 import GlowButton from '../shared/GlowButton';
 import { Building2 } from 'lucide-react';
 
 export default function ShelterManager() {
+  const { t } = useTranslation();
   const [shelters, setShelters] = useState(mockShelters);
 
   const updateOccupancy = (id, value) => {
@@ -24,7 +26,7 @@ export default function ShelterManager() {
         <div className="flex items-center gap-2">
           <Building2 size={16} style={{ color: 'var(--text-secondary)' }} />
           <h3 className="text-sm font-bold uppercase tracking-widest" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-            Shelter Manager
+            {t('shelterManager.title')}
           </h3>
         </div>
       </div>
@@ -66,7 +68,7 @@ export default function ShelterManager() {
               {/* Capacity bar */}
               <div>
                 <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-                  <span>Occupancy</span>
+                  <span>{t('shelterManager.occupancy')}</span>
                   <span style={{ color: barColor }}>{pct}%</span>
                 </div>
                 <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
@@ -76,7 +78,7 @@ export default function ShelterManager() {
 
               {/* Editable occupancy */}
               <div className="flex items-center gap-2">
-                <label className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif", whiteSpace: 'nowrap' }}>Current:</label>
+                <label className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif", whiteSpace: 'nowrap' }}>{t('shelterManager.current')}</label>
                 <input
                   type="number"
                   value={shelter.current_occupancy}

@@ -12,13 +12,49 @@ import {
   mockRoute,
 } from '../data/mockData';
 
-const BASE_URL = 'http://localhost:8000';
+// Use Vite proxy (relative URL) — no CORS issues. Falls back to direct URL if needed.
+const BASE_URL = '';
 
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 8000,
   headers: { 'Content-Type': 'application/json' },
 });
+
+// Auto-attach JWT token
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('evacu_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Auto-refresh on 401
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const refresh = localStorage.getItem('evacu_refresh');
+      if (refresh) {
+        try {
+          const res = await axios.post('/api/auth/refresh', { refresh_token: refresh });
+          const newToken = res.data.access_token;
+          localStorage.setItem('evacu_token', newToken);
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return api(originalRequest);
+        } catch {
+          localStorage.removeItem('evacu_token');
+          localStorage.removeItem('evacu_refresh');
+          window.location.href = '/auth';
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 // ── Hazards ──────────────────────────────────────────────────────────────────
 

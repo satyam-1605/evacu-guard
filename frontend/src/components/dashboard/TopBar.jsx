@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Crosshair, Bell, Loader2, MapPin, X } from 'lucide-react';
-import { mockStats, mockAlerts } from '../../data/mockData';
+import { Search, Crosshair, Loader2, MapPin, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { mockStats } from '../../data/mockData';
 
 const NOMINATIM = 'https://nominatim.openstreetmap.org/search';
 
@@ -20,9 +21,9 @@ export default function TopBar({ onLocate, location, locationLoading, locationEr
   const debounceRef = useRef(null);
   const wrapperRef = useRef(null);
   const inputRef = useRef(null);
+  const { t } = useTranslation();
 
   const stats = mockStats;
-  const unread = mockAlerts.filter(a => a.severity === 'critical' || a.severity === 'high').length;
 
   const alertLevelConfig = {
     WARNING:  { color: '#f59e0b', bg: 'rgba(245,158,11,0.12)',  border: 'rgba(245,158,11,0.3)'  },
@@ -119,7 +120,7 @@ export default function TopBar({ onLocate, location, locationLoading, locationEr
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => suggestions.length > 0 && setOpen(true)}
-          placeholder="Search location in Jaipur..."
+          placeholder={t('topbar.searchPlaceholder')}
           autoComplete="off"
           spellCheck={false}
           className="w-full pl-9 pr-8 py-2 rounded-xl text-sm outline-none transition-all"
@@ -197,7 +198,7 @@ export default function TopBar({ onLocate, location, locationLoading, locationEr
           className="text-xs font-bold tracking-widest uppercase"
           style={{ color: lvlCfg.color, fontFamily: "'JetBrains Mono', monospace" }}
         >
-          LEVEL {stats.alert_level_num}: {stats.current_alert_level}
+          {t('topbar.alertLevel', { num: stats.alert_level_num, level: stats.current_alert_level })}
         </span>
       </div>
 
@@ -235,7 +236,7 @@ export default function TopBar({ onLocate, location, locationLoading, locationEr
           border: `1px solid ${locationLoading ? 'rgba(16,185,129,0.4)' : 'rgba(255,255,255,0.08)'}`,
           color: locationLoading ? '#10b981' : 'var(--text-secondary)',
         }}
-        title={locationError ? `GPS error: ${locationError}` : 'Refresh my location'}
+        title={locationError ? t('topbar.gpsError', { error: locationError }) : t('topbar.refreshLocation')}
       >
         {locationLoading
           ? <Loader2 size={16} className="animate-spin" />
@@ -243,21 +244,6 @@ export default function TopBar({ onLocate, location, locationLoading, locationEr
         }
       </button>
 
-      {/* Notification bell */}
-      <button
-        className="relative w-9 h-9 rounded-xl flex items-center justify-center transition-all flex-shrink-0"
-        style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-secondary)' }}
-      >
-        <Bell size={16} />
-        {unread > 0 && (
-          <span
-            className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-xs flex items-center justify-center font-bold"
-            style={{ background: '#ef4444', color: '#fff', fontSize: '9px', fontFamily: "'JetBrains Mono', monospace" }}
-          >
-            {unread}
-          </span>
-        )}
-      </button>
     </div>
   );
 }

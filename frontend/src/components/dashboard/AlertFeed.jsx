@@ -1,9 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { severityConfig, formatTimeAgo } from '../../data/mockData';
 import { useAlerts } from '../../hooks/useAlerts';
 
 export default function AlertFeed() {
   const { alerts, connected, loading } = useAlerts();
+  const { t, i18n } = useTranslation();
+  const isHindi = i18n.language?.startsWith('hi');
 
   const displayAlerts = alerts.slice(0, 8);
 
@@ -21,7 +24,7 @@ export default function AlertFeed() {
             }}
           />
           <h3 className="text-sm font-bold tracking-wide uppercase" style={{ color: 'var(--text-primary)', fontFamily: "'Orbitron', sans-serif" }}>
-            Live Alerts
+            {t('alertFeed.title')}
           </h3>
         </div>
         <div className="flex items-center gap-2">
@@ -35,13 +38,13 @@ export default function AlertFeed() {
               fontSize: '9px',
             }}
           >
-            {connected ? 'LIVE' : 'OFFLINE'}
+            {connected ? t('alertFeed.live') : t('alertFeed.offline')}
           </span>
           <span
             className="text-xs px-2 py-0.5 rounded-full font-jetbrains"
             style={{ background: 'rgba(239,68,68,0.12)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.25)', fontFamily: "'JetBrains Mono', monospace" }}
           >
-            {alerts.length} active
+            {alerts.length} {t('alertFeed.active')}
           </span>
         </div>
       </div>
@@ -60,6 +63,8 @@ export default function AlertFeed() {
         <AnimatePresence initial={false}>
           {displayAlerts.map((alert, i) => {
             const cfg = severityConfig[alert.severity] || severityConfig.info;
+            const title = isHindi ? (alert.title_hi || alert.title) : alert.title;
+            const description = isHindi ? (alert.description_hi || alert.description) : alert.description;
             return (
               <motion.div
                 key={alert.id}
@@ -77,7 +82,7 @@ export default function AlertFeed() {
               >
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <span className="text-xs font-bold leading-tight flex-1" style={{ color: 'var(--text-primary)', fontFamily: "'Exo 2', sans-serif" }}>
-                    {alert.title}
+                    {title}
                   </span>
                   <span
                     className="text-xs px-1.5 py-0.5 rounded font-bold flex-shrink-0"
@@ -87,7 +92,7 @@ export default function AlertFeed() {
                   </span>
                 </div>
                 <p className="text-xs leading-relaxed mb-2" style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}>
-                  {alert.description?.slice(0, 90)}...
+                  {description?.slice(0, 90)}...
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>

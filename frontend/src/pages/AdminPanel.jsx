@@ -1,7 +1,8 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Shield } from 'lucide-react';
+import { ArrowLeft, Shield, LogOut } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '../contexts/AuthContext';
 import Sidebar from '../components/dashboard/Sidebar';
 import SystemStatus from '../components/admin/SystemStatus';
 import ScenarioSimulator from '../components/admin/ScenarioSimulator';
@@ -12,6 +13,8 @@ import GlowButton from '../components/shared/GlowButton';
 
 export default function AdminPanel() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
@@ -26,19 +29,31 @@ export default function AdminPanel() {
           style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid rgba(255,255,255,0.06)', height: 60 }}
         >
           <GlowButton variant="ghost" size="sm" icon={ArrowLeft} onClick={() => navigate('/dashboard')}>
-            Dashboard
+            {t('adminPanel.dashboard')}
           </GlowButton>
           <div className="flex items-center gap-2">
             <Shield size={16} color="#9333ea" />
             <span className="font-bold text-sm" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-              Admin Control Panel
+              {t('adminPanel.adminControlPanel')}
             </span>
           </div>
-          <div className="ml-auto flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{ background: 'rgba(147,51,234,0.1)', border: '1px solid rgba(147,51,234,0.25)' }}>
-            <span className="w-2 h-2 rounded-full bg-purple-400" style={{ animation: 'pulseDot 1.5s ease-in-out infinite' }} />
-            <span className="text-xs font-bold" style={{ color: '#9333ea', fontFamily: "'JetBrains Mono', monospace" }}>
-              ADMIN MODE
-            </span>
+          <div className="ml-auto flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl" style={{ background: 'rgba(147,51,234,0.1)', border: '1px solid rgba(147,51,234,0.25)' }}>
+              <span className="w-2 h-2 rounded-full bg-purple-400" style={{ animation: 'pulseDot 1.5s ease-in-out infinite' }} />
+              <span className="text-xs font-bold" style={{ color: '#9333ea', fontFamily: "'JetBrains Mono', monospace" }}>
+                {t('adminPanel.adminMode')}
+              </span>
+            </div>
+            <button
+              onClick={() => { logout(); navigate('/'); }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
+              style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', fontFamily: "'JetBrains Mono', monospace" }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.15)'; e.currentTarget.style.borderColor = 'rgba(239,68,68,0.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.08)'; e.currentTarget.style.borderColor = 'rgba(239,68,68,0.2)'; }}
+            >
+              <LogOut size={12} />
+              {t('adminPanel.logout')}
+            </button>
           </div>
         </div>
 

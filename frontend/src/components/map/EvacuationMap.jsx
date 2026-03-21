@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { motion } from 'framer-motion';
 import { Navigation2, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import 'leaflet/dist/leaflet.css';
 import HazardOverlay from './HazardOverlay';
 import ShelterMarkers from './ShelterMarkers';
@@ -74,6 +75,7 @@ function FlyToUser({ location }) {
 }
 
 export default function EvacuationMap({ location, locationLoading, searchTarget, onRouteRequest, selectedShelter }) {
+  const { t } = useTranslation();
   const [layers, setLayers] = useState({
     hazards: true,
     shelters: true,
@@ -82,11 +84,30 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
     blocked: true,
   });
   const [liveHazards, setLiveHazards] = useState(mockHazards);
+  const [showPanel, setShowPanel] = useState(false);
+  const suppressPanel = useRef(false);
 
   const {
     route, routeOptions, selectedOptionIndex,
     loading, requestRoute, selectOption, clearRoute,
   } = useEvacuation();
+
+  // Show panel only when triggered by the FAB button, not by Navigate
+  useEffect(() => {
+    if (routeOptions.length > 0 && !suppressPanel.current) setShowPanel(true);
+    suppressPanel.current = false;
+  }, [routeOptions]);
+
+  // Auto-route when a shelter is selected via Navigate — draw route silently
+  useEffect(() => {
+    if (!selectedShelter) return;
+    suppressPanel.current = true;
+    const lat = location?.lat ?? JAIPUR_CENTER[0];
+    const lng = location?.lng ?? JAIPUR_CENTER[1];
+    requestRoute({ lat, lng, shelter_id: selectedShelter.id });
+    setLayers(prev => ({ ...prev, routes: true }));
+  }, [selectedShelter]);
+
 
   // Poll backend hazards every 5s so map updates live when scenario escalates zones
   useEffect(() => {
@@ -132,6 +153,7 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
 
         <FlyToUser location={location} />
         <FlyToSearch target={searchTarget} />
+        <FlyToSearch target={selectedShelter} />
 
         {/* User GPS marker */}
         {location && !locationLoading && (
@@ -216,7 +238,7 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
           />
           <span className="text-xs" style={{ color: location.isFallback ? '#f59e0b' : '#3b82f6', fontFamily: "'JetBrains Mono', monospace" }}>
             {location.isFallback
-              ? 'GPS unavailable — showing Jaipur center'
+              ? t('evacuationMap.gpsUnavailable')
               : `${location.lat.toFixed(5)}°N, ${location.lng.toFixed(5)}°E${location.accuracy ? ` ±${location.accuracy}m` : ''}`}
           </span>
         </div>
@@ -228,8 +250,8 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
         options={routeOptions}
         selectedIndex={selectedOptionIndex}
         onSelect={handleSelectOption}
-        onClose={clearRoute}
-        visible={routeOptions.length > 0}
+        onClose={() => setShowPanel(false)}
+        visible={showPanel && routeOptions.length > 0}
       />
 
       {/* Get Route FAB */}
@@ -252,12 +274,12 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
           {loading ? (
             <>
               <span className="w-4 h-4 rounded-full border-2 border-emerald-400/30 border-t-emerald-400 animate-spin" />
-              Computing Route...
+              {t('evacuationMap.computingRoute')}
             </>
           ) : (
             <>
               <Navigation2 size={16} />
-              Get Evacuation Route
+              {t('evacuationMap.getEvacuationRoute')}
             </>
           )}
         </motion.button>

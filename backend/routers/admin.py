@@ -1,11 +1,12 @@
 import json
 import os
 import asyncio
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
 from models.schemas import ScenarioRequest, HazardUpdate, AlertBroadcast
 from services.alert_manager import alert_manager
 from routers.hazards import update_zone_severity, get_hazard_state
 from services.risk_engine import risk_engine
+from auth.dependencies import require_admin
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -48,7 +49,7 @@ async def _run_scenario(scenario_data: dict):
 
 
 @router.post("/scenario")
-async def activate_scenario(body: ScenarioRequest, background_tasks: BackgroundTasks):
+async def activate_scenario(body: ScenarioRequest, background_tasks: BackgroundTasks, _: dict = Depends(require_admin)):
     """Activate a pre-built disaster scenario with progressive zone escalation."""
     valid_scenarios = ["monsoon_flood", "cloudburst", "multi_hazard"]
     if body.scenario not in valid_scenarios:
@@ -91,7 +92,7 @@ async def activate_scenario(body: ScenarioRequest, background_tasks: BackgroundT
 
 
 @router.post("/hazard")
-async def create_hazard(body: HazardUpdate):
+async def create_hazard(body: HazardUpdate, _: dict = Depends(require_admin)):
     """Create or update a hazard zone."""
     from datetime import datetime
     import uuid
@@ -124,7 +125,7 @@ async def create_hazard(body: HazardUpdate):
 
 
 @router.post("/broadcast")
-async def broadcast_alert(body: AlertBroadcast):
+async def broadcast_alert(body: AlertBroadcast, _: dict = Depends(require_admin)):
     """Broadcast emergency message to all connected clients."""
     alert = await alert_manager.add_alert(
         title=f"[BROADCAST] Emergency Alert",
@@ -137,7 +138,7 @@ async def broadcast_alert(body: AlertBroadcast):
 
 
 @router.get("/status")
-async def get_status():
+async def get_status(_: dict = Depends(require_admin)):
     """System health check."""
     return {
         "api": "online",

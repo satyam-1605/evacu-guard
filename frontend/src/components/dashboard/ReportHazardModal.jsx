@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, AlertTriangle, Send } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import GlowButton from '../shared/GlowButton';
 
-const hazardTypes = ['Flooding', 'Road Block', 'Waterlogging', 'Fire', 'Tree Fall', 'Power Outage', 'Other'];
-const severities = ['low', 'medium', 'high', 'critical'];
+const HAZARD_TYPE_KEYS = ['Flooding', 'Road Block', 'Waterlogging', 'Fire', 'Tree Fall', 'Power Outage', 'Other'];
+const SEVERITY_KEYS = ['low', 'medium', 'high', 'critical'];
 
 export default function ReportHazardModal({ open, onClose }) {
   const [form, setForm] = useState({ type: 'Flooding', severity: 'medium', description: '', location: '' });
   const [submitted, setSubmitted] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -37,7 +39,7 @@ export default function ReportHazardModal({ open, onClose }) {
               <div className="flex items-center gap-2">
                 <AlertTriangle size={18} color="#f59e0b" />
                 <h3 className="text-base font-bold" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-                  Report Hazard
+                  {t('reportModal.title')}
                 </h3>
               </div>
               <button onClick={onClose} style={{ color: 'var(--text-muted)' }}><X size={18} /></button>
@@ -50,28 +52,28 @@ export default function ReportHazardModal({ open, onClose }) {
                 className="text-center py-8"
               >
                 <div className="text-4xl mb-3">✅</div>
-                <p className="text-emerald-400 font-bold" style={{ fontFamily: "'Exo 2', sans-serif" }}>Report Submitted!</p>
-                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Authorities have been notified.</p>
+                <p className="text-emerald-400 font-bold" style={{ fontFamily: "'Exo 2', sans-serif" }}>{t('reportModal.reportSubmitted')}</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{t('reportModal.authoritiesNotified')}</p>
               </motion.div>
             ) : (
               <div className="flex flex-col gap-4">
                 {/* Hazard type */}
                 <div>
-                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>Hazard Type</label>
+                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{t('reportModal.hazardType')}</label>
                   <div className="flex flex-wrap gap-2">
-                    {hazardTypes.map(t => (
+                    {HAZARD_TYPE_KEYS.map(typeKey => (
                       <button
-                        key={t}
-                        onClick={() => setForm(f => ({ ...f, type: t }))}
+                        key={typeKey}
+                        onClick={() => setForm(f => ({ ...f, type: typeKey }))}
                         className="px-3 py-1.5 rounded-lg text-xs transition-all"
                         style={{
-                          background: form.type === t ? 'rgba(245,158,11,0.15)' : 'rgba(255,255,255,0.04)',
-                          border: `1px solid ${form.type === t ? 'rgba(245,158,11,0.4)' : 'rgba(255,255,255,0.08)'}`,
-                          color: form.type === t ? '#f59e0b' : 'var(--text-secondary)',
+                          background: form.type === typeKey ? 'rgba(245,158,11,0.15)' : 'rgba(255,255,255,0.04)',
+                          border: `1px solid ${form.type === typeKey ? 'rgba(245,158,11,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                          color: form.type === typeKey ? '#f59e0b' : 'var(--text-secondary)',
                           fontFamily: "'Exo 2', sans-serif",
                         }}
                       >
-                        {t}
+                        {t(`reportModal.hazardTypes.${typeKey}`)}
                       </button>
                     ))}
                   </div>
@@ -79,9 +81,9 @@ export default function ReportHazardModal({ open, onClose }) {
 
                 {/* Severity */}
                 <div>
-                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>Severity</label>
+                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{t('reportModal.severity')}</label>
                   <div className="flex gap-2">
-                    {severities.map(s => {
+                    {SEVERITY_KEYS.map(s => {
                       const colors = { low: '#10b981', medium: '#f59e0b', high: '#f97316', critical: '#ef4444' };
                       const c = colors[s];
                       return (
@@ -96,7 +98,7 @@ export default function ReportHazardModal({ open, onClose }) {
                             fontFamily: "'JetBrains Mono', monospace",
                           }}
                         >
-                          {s}
+                          {t(`reportModal.severities.${s}`)}
                         </button>
                       );
                     })}
@@ -105,9 +107,9 @@ export default function ReportHazardModal({ open, onClose }) {
 
                 {/* Location */}
                 <div>
-                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>Location</label>
+                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{t('reportModal.location')}</label>
                   <input
-                    placeholder="e.g. Near Mansarovar bridge..."
+                    placeholder={t('reportModal.locationPlaceholder')}
                     value={form.location}
                     onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
                     className="w-full px-3 py-2 rounded-xl text-sm outline-none"
@@ -117,10 +119,10 @@ export default function ReportHazardModal({ open, onClose }) {
 
                 {/* Description */}
                 <div>
-                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>Description</label>
+                  <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{t('reportModal.description')}</label>
                   <textarea
                     rows={3}
-                    placeholder="Describe the hazard in detail..."
+                    placeholder={t('reportModal.descriptionPlaceholder')}
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                     className="w-full px-3 py-2 rounded-xl text-sm outline-none resize-none"
@@ -129,7 +131,7 @@ export default function ReportHazardModal({ open, onClose }) {
                 </div>
 
                 <GlowButton variant="primary" size="md" icon={Send} fullWidth onClick={handleSubmit}>
-                  Submit Report
+                  {t('reportModal.submitReport')}
                 </GlowButton>
               </div>
             )}

@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { fetchAlerts } from '../services/api';
 import { mockAlerts } from '../data/mockData';
 
-const WS_URL = 'ws://localhost:8000/ws/alerts';
+const WS_URL = `ws://${window.location.host}/ws/alerts`;
 const RECONNECT_DELAY_MS = 4000;
 const MAX_ALERTS = 50;
 
@@ -20,6 +20,7 @@ export function useAlerts() {
 
   // Load initial alerts from REST
   useEffect(() => {
+    unmounted.current = false;
     fetchAlerts().then((data) => {
       if (!unmounted.current && data?.length) {
         setAlerts(data);
@@ -69,6 +70,7 @@ export function useAlerts() {
   }, []);
 
   useEffect(() => {
+    unmounted.current = false;
     connect();
     return () => {
       unmounted.current = true;

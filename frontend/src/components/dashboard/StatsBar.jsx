@@ -1,14 +1,25 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { mockStats } from '../../data/mockData';
+import { fetchStats } from '../../services/api';
 import AnimatedNumber from '../shared/AnimatedNumber';
 
 export default function StatsBar() {
-  const stats = mockStats;
+  const [stats, setStats] = useState(mockStats);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    fetchStats().then(data => setStats(data));
+    const id = setInterval(() => fetchStats().then(data => setStats(data)), 10000);
+    return () => clearInterval(id);
+  }, []);
+
   const items = [
-    { label: 'Active Hazard Zones', value: stats.active_zones, accent: '#ef4444', suffix: '', pulse: true },
-    { label: 'Shelter Capacity', value: stats.occupied_capacity, suffix: `/${stats.total_shelter_capacity}`, accent: '#10b981' },
-    { label: 'Avg Evacuation Time', value: stats.avg_evacuation_time, suffix: ' min', accent: '#3b82f6', decimals: 1 },
-    { label: 'Citizen Reports', value: stats.active_reports, suffix: ' active', accent: '#f59e0b' },
+    { label: t('statsBar.activeHazardZones'), value: stats.active_zones, accent: '#ef4444', suffix: '', pulse: true },
+    { label: t('statsBar.shelterCapacity'), value: stats.occupied_capacity, suffix: `/${stats.total_shelter_capacity}`, accent: '#10b981' },
+    { label: t('statsBar.avgEvacuationTime'), value: stats.avg_evacuation_time, suffix: ` ${t('statsBar.min')}`, accent: '#3b82f6', decimals: 1 },
+    { label: t('statsBar.citizenReports'), value: stats.active_reports, suffix: ` ${t('statsBar.active')}`, accent: '#f59e0b' },
   ];
 
   return (

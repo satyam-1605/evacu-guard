@@ -1,0 +1,688 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "shelters": "Shelters",
+    "alerts": "Alerts",
+    "report": "Report",
+    "analytics": "Analytics",
+    "preparedness": "Preparedness",
+    "about": "About",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "admin": "Admin",
+    "adminPanel": "Admin Panel",
+    "myProfile": "My Profile",
+    "sosAlerts": "SOS — Emergency Alerts"
+  },
+  "footer": {
+    "description": "AI-Powered Evacuation Route Planning & Crowd Movement System.\nBuilt for Jaipur, Rajasthan — protecting lives through intelligent disaster response.",
+    "smarter": "Smarter evacuation",
+    "faster": "Faster response",
+    "safer": "Safer Jaipur",
+    "tagline": "Real-time intelligence · AI-powered routing · Built for Jaipur, Rajasthan"
+  },
+  "hero": {
+    "badge": "When every second counts — we make them count",
+    "subtitle": "AI-Powered Evacuation Intelligence for Jaipur",
+    "description": "Real-time flood detection · ML-powered risk scoring · Dynamic route planning · Crowd-sourced hazard reporting — all in one command center for Jaipur's disaster response.",
+    "yourLocation": "Your Location",
+    "launchDashboard": "Launch Dashboard",
+    "viewAnalytics": "View Analytics",
+    "liveMonitor": "Live — Jaipur Flood Monitor",
+    "stats": {
+      "activeHazardZones": "Active Hazard Zones",
+      "shelterCapacity": "Shelter Capacity",
+      "minResponseTime": "Min Response Time",
+      "scenariosReady": "Scenarios Ready"
+    }
+  },
+  "howItWorks": {
+    "sectionLabel": "— System Architecture —",
+    "title": "How EvacuGuard Works",
+    "step1Title": "Real-time Monitoring",
+    "step1Desc": "Open-Meteo API streams live rainfall and weather data every 5 minutes. Jaipur flood zones tracked continuously.",
+    "step2Title": "AI Risk Scoring",
+    "step2Desc": "Random Forest model analyzes elevation, rainfall, soil drainage, and 3 more features to classify each zone.",
+    "step3Title": "Smart Route Planning",
+    "step3Desc": "NetworkX Dijkstra algorithm weights roads by hazard level. OSRM provides road-snapped real coordinates.",
+    "step4Title": "Safe Evacuation",
+    "step4Desc": "Citizens get instant routes to nearest available shelter with live capacity tracking and turn-by-turn guidance."
+  },
+  "features": {
+    "sectionLabel": "— Core Capabilities —",
+    "title": "System Features",
+    "map": {
+      "title": "Live Hazard Map",
+      "desc": "CartoDB dark map with real-time flood zone overlays, shelter markers, and animated evacuation routes."
+    },
+    "ml": {
+      "title": "ML Risk Prediction",
+      "desc": "Random Forest with 6 features. Feature importances drive real-time risk classification."
+    },
+    "route": {
+      "title": "Dynamic Routing",
+      "desc": "Dijkstra + OSRM. Hazard penalties weight roads: 1× safe → 100× critical."
+    },
+    "alerts": {
+      "title": "Multilingual Alerts",
+      "desc": "Emergency broadcasts in Hindi and English with priority severity levels."
+    },
+    "reports": {
+      "title": "Crowd Reports",
+      "desc": "3+ reports in 30 min auto-escalate zone risk. Citizens power the system."
+    },
+    "shelter": {
+      "title": "Smart Shelter Match",
+      "desc": "KNN scoring: 60% weight distance + 40% remaining capacity across 7 Jaipur shelters."
+    },
+    "accuracy": "Accuracy"
+  },
+  "techStack": {
+    "poweredBy": "— Powered by —",
+    "title": "Tech Stack"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "evacuationMap": "Evacuation Map",
+    "shelters": "Shelters",
+    "jaipurWeather": "Jaipur Weather",
+    "imdAlert": "IMD {{level}} ALERT",
+    "landingPage": "Landing Page",
+    "emergencySos": "EMERGENCY SOS",
+    "backToLanding": "Back to Landing Page"
+  },
+  "topbar": {
+    "searchPlaceholder": "Search location in Jaipur...",
+    "alertLevel": "LEVEL {{num}}: {{level}}",
+    "refreshLocation": "Refresh my location",
+    "gpsError": "GPS error: {{error}}"
+  },
+  "statsBar": {
+    "activeHazardZones": "Active Hazard Zones",
+    "shelterCapacity": "Shelter Capacity",
+    "avgEvacuationTime": "Avg Evacuation Time",
+    "citizenReports": "Citizen Reports",
+    "active": "active",
+    "min": "min"
+  },
+  "dashboard": {
+    "commandOverview": "Command Overview",
+    "realtime": "Real-time situational awareness — Jaipur, Rajasthan",
+    "openEvacuationMap": "Open Evacuation Map",
+    "viewAllAlerts": "View All Alerts",
+    "viewAllShelters": "View All Shelters",
+    "currentAlertLevel": "Current Alert Level",
+    "warning": "WARNING",
+    "statLabels": {
+      "activeHazardZones": "Active Hazard Zones",
+      "openShelters": "Open Shelters",
+      "avgEvacuationTime": "Avg Evacuation Time",
+      "citizensAffected": "Citizens Affected",
+      "shelterCapacity": "Shelter Capacity",
+      "citizenReports": "Citizen Reports"
+    },
+    "zones": "zones",
+    "active": "active"
+  },
+  "alertFeed": {
+    "title": "Live Alerts",
+    "live": "LIVE",
+    "offline": "OFFLINE",
+    "active": "active"
+  },
+  "alertsView": {
+    "title": "Live Alert Feed",
+    "subtitle": "Real-time emergency notifications · Jaipur District",
+    "active": "ACTIVE",
+    "filterAll": "ALL",
+    "noAlerts": "No {{filter}} alerts at this time"
+  },
+  "shelterPanel": {
+    "title": "Nearest Shelters",
+    "navigate": "Navigate",
+    "kmAway": "{{km}} km away",
+    "capacity": "{{current}} / {{total}} capacity"
+  },
+  "sheltersView": {
+    "title": "Evacuation Shelters",
+    "subtitle": "{{count}} shelters operational · Jaipur District",
+    "spacesAvailable": "{{count}} spaces available",
+    "navigate": "Navigate",
+    "kmAway": "{{km}} km away",
+    "occupancy": "{{current}} / {{total}} occupancy"
+  },
+  "riskGauge": {
+    "title": "Current Area Risk",
+    "mlLive": "ML LIVE",
+    "elevation": "Elevation",
+    "rainfall": "Rainfall",
+    "drainage": "Drainage",
+    "poor": "Poor"
+  },
+  "reportModal": {
+    "title": "Report Hazard",
+    "hazardType": "Hazard Type",
+    "severity": "Severity",
+    "location": "Location",
+    "locationPlaceholder": "e.g. Near Mansarovar bridge...",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe the hazard in detail...",
+    "submitReport": "Submit Report",
+    "reportSubmitted": "Report Submitted!",
+    "authoritiesNotified": "Authorities have been notified.",
+    "hazardTypes": {
+      "Flooding": "Flooding",
+      "Road Block": "Road Block",
+      "Waterlogging": "Waterlogging",
+      "Fire": "Fire",
+      "Tree Fall": "Tree Fall",
+      "Power Outage": "Power Outage",
+      "Other": "Other"
+    },
+    "severities": {
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "critical": "critical"
+    }
+  },
+  "mapControls": {
+    "hazards": "Hazards",
+    "shelters": "Shelters",
+    "routes": "Routes",
+    "crowd": "Crowd"
+  },
+  "mapLegend": {
+    "legend": "Legend",
+    "safe": "Safe",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical",
+    "shelter": "Shelter",
+    "route": "Route",
+    "blockedRoad": "Blocked Road",
+    "you": "You"
+  },
+  "evacuationMap": {
+    "getEvacuationRoute": "Get Evacuation Route",
+    "computingRoute": "Computing Route...",
+    "gpsUnavailable": "GPS unavailable — showing Jaipur center"
+  },
+  "routeComparison": {
+    "chooseRoute": "Choose Route",
+    "optionsComputed": "{{count}} options computed — tap to activate",
+    "avoidsZones": "Avoids {{count}} zones"
+  },
+  "adminPanel": {
+    "dashboard": "Dashboard",
+    "adminControlPanel": "Admin Control Panel",
+    "adminMode": "ADMIN MODE",
+    "logout": "LOGOUT"
+  },
+  "systemStatus": {
+    "title": "System Status",
+    "online": "ONLINE",
+    "offline": "OFFLINE",
+    "latency": "Latency",
+    "status": "Status",
+    "type": "Type",
+    "source": "Source",
+    "connections": "Connections",
+    "scenarios": "Scenarios",
+    "apiServer": "API Server",
+    "mlModel": "ML Model",
+    "weatherService": "Weather Service",
+    "websocket": "WebSocket",
+    "loaded": "Loaded",
+    "live": "Live",
+    "cached": "Cached",
+    "fallback": "Fallback",
+    "none": "None",
+    "randomForest": "Random Forest"
+  },
+  "scenarioSimulator": {
+    "title": "Scenario Simulator",
+    "ready": "READY",
+    "simulated": "SIMULATED",
+    "live": "● LIVE",
+    "activating": "⚡ ACTIVATING: {{name}}",
+    "active": "ACTIVE",
+    "running": "RUNNING",
+    "activate": "Activate",
+    "confirmActivation": "Confirm Activation",
+    "activateScenario": "Activate scenario:",
+    "willEscalate": "This will escalate {{zones}} zones and alert ~{{evacuees}} residents via all channels.",
+    "cancel": "Cancel",
+    "escalating": "⚡ Live — escalating {{zones}} zones, broadcasting WebSocket alerts...",
+    "simulating": "Simulating {{zones}} zone escalations...",
+    "fullyActivated": "{{name}} scenario fully activated",
+    "zones": "Zones",
+    "evacuees": "Evacuees"
+  },
+  "alertBroadcast": {
+    "title": "Alert Broadcast",
+    "severity": "Severity",
+    "emergencyMessage": "Emergency Message",
+    "messagePlaceholder": "Compose emergency broadcast message for all Jaipur residents...",
+    "broadcastToAll": "Broadcast to All Users",
+    "broadcastSent": "✓ Broadcast sent to all users",
+    "recentBroadcasts": "Recent Broadcasts",
+    "severityLabels": {
+      "info": "Info",
+      "warning": "Warning",
+      "critical": "Critical",
+      "emergency": "Emergency"
+    }
+  },
+  "hazardManager": {
+    "title": "Hazard Zone Manager",
+    "addZone": "Add Zone",
+    "remove": "Remove",
+    "addHazardZone": "Add Hazard Zone",
+    "zoneName": "Zone Name",
+    "zoneNamePlaceholder": "e.g. Tonk Road Sector 4",
+    "type": "Type",
+    "severity": "Severity",
+    "affectedPopulation": "Affected Population",
+    "populationPlaceholder": "e.g. 25000",
+    "zoneNameRequired": "Zone name is required.",
+    "cancel": "Cancel",
+    "adding": "Adding...",
+    "addZoneBtn": "Add Zone",
+    "columns": {
+      "zoneName": "Zone Name",
+      "severity": "Severity",
+      "type": "Type",
+      "riskScore": "Risk Score",
+      "population": "Population"
+    }
+  },
+  "shelterManager": {
+    "title": "Shelter Manager",
+    "occupancy": "Occupancy",
+    "current": "Current:"
+  },
+  "sheltersPage": {
+    "liveMap": "LIVE MAP · JAIPUR",
+    "emergencyShelters": "Emergency Shelters",
+    "searchPlaceholder": "Search shelters…",
+    "noShelters": "No shelters match your filters",
+    "getDirections": "Get Directions",
+    "routing": "Routing...",
+    "occupancy": "Occupancy",
+    "spaces": "spaces",
+    "kmAway": "km away",
+    "filters": {
+      "all": "All",
+      "water": "Water",
+      "medical": "Medical",
+      "food": "Food",
+      "electricity": "Electricity"
+    },
+    "sortOptions": {
+      "distance": "Distance",
+      "capacity": "Capacity",
+      "availability": "Availability"
+    },
+    "bottomStats": {
+      "totalShelters": "Total Shelters",
+      "totalCapacity": "Total Capacity",
+      "available": "Available"
+    },
+    "statusLabels": {
+      "open": "OPEN",
+      "limited": "LIMITED",
+      "full": "FULL"
+    }
+  },
+  "alertCenter": {
+    "title": "Alert Center",
+    "live": "LIVE",
+    "lastUpdated": "Last updated: just now",
+    "stats": {
+      "total": "Total",
+      "critical": "Critical",
+      "high": "High",
+      "resolved": "Resolved"
+    },
+    "categories": {
+      "all": "ALL",
+      "weather": "Weather",
+      "flood": "Flood",
+      "road_block": "Road Block",
+      "shelter": "Shelter",
+      "infrastructure": "Infrastructure",
+      "rescue": "Rescue"
+    },
+    "now": "Now",
+    "earlierToday": "Earlier Today",
+    "noAlerts": "No alerts in this category",
+    "alertDistribution": "Alert Distribution",
+    "hotspotAreas": "Hotspot Areas",
+    "quickReport": "+ Quick Report",
+    "noData": "No data",
+    "noLocationData": "No location data"
+  },
+  "reportHazard": {
+    "title": "Report a Hazard",
+    "subtitle": "Help keep Jaipur safe. Your reports trigger automatic alerts.",
+    "hazardType": "Hazard Type",
+    "severity": "Severity",
+    "location": "Location",
+    "locationPlaceholder": "Enter location...",
+    "pickOnMap": "Pick on Map →",
+    "clickMapInstruction": "Click anywhere on the map to drop a pin",
+    "clickMapInstruction2": "Click on the map to place your hazard marker",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe the hazard — what you see, how severe it is...",
+    "submitReport": "Submit Report",
+    "reportSubmitted": "Report Submitted!",
+    "autoEscalate": "Report submitted. 3+ reports from same area will auto-escalate the zone.",
+    "hazardTypes": {
+      "waterlogging": "Waterlogging",
+      "road_blockage": "Road Blockage",
+      "structural_damage": "Structural Damage",
+      "fire": "Fire",
+      "power_outage": "Power Outage",
+      "other": "Other"
+    },
+    "severities": {
+      "low": "Low",
+      "lowSub": "Minor, passable",
+      "medium": "Medium",
+      "mediumSub": "Significant, caution",
+      "high": "High",
+      "highSub": "Dangerous, avoid area"
+    }
+  },
+  "preparedness": {
+    "heroBanner": {
+      "title1": "Be Prepared.",
+      "title2": "Stay Safe.",
+      "desc": "Floods can happen in minutes. Your preparedness can save lives. Use this guide to ensure you and your family are ready when it matters most."
+    },
+    "checklist": {
+      "title": "Emergency Preparedness Checklist",
+      "completed": "{{done}} / {{total}} completed",
+      "items": {
+        "0": "Know your nearest shelter location",
+        "1": "Save emergency contacts (112, 108, 101)",
+        "2": "Prepare emergency kit (water, food, medicine)",
+        "3": "Identify your primary evacuation route",
+        "4": "Waterproof important documents",
+        "5": "Keep phone charged + portable battery",
+        "6": "Follow official weather updates daily",
+        "7": "Register for EvacuGuard emergency alerts"
+      }
+    },
+    "safetyGuidelines": "Safety Guidelines",
+    "safetyTips": {
+      "flooding": {
+        "title": "During Flooding",
+        "preview": "Stay away from flood waters and move to higher ground immediately.",
+        "bullets": [
+          "Stay away from all flood waters — even shallow water can knock you down",
+          "Move to higher ground immediately and do not wait for instructions",
+          "Do not drive through flooded roads — turn around, don't drown",
+          "Avoid storm drains, ditches, and streams during heavy rain"
+        ]
+      },
+      "evacuation": {
+        "title": "Evacuation Tips",
+        "preview": "Follow designated routes and take your emergency kit with you.",
+        "bullets": [
+          "Follow only designated official evacuation routes",
+          "Always take your pre-packed emergency kit with you",
+          "Keep your family together and account for everyone before leaving",
+          "Lock your home, turn off utilities, and leave early to avoid traffic"
+        ]
+      },
+      "firstAid": {
+        "title": "First Aid Basics",
+        "preview": "Keep a first aid kit accessible and know CPR basics.",
+        "bullets": [
+          "Keep a fully stocked first aid kit at home and in your vehicle",
+          "Learn CPR basics — it can save a life in the critical minutes before help arrives",
+          "Treat wounds immediately to prevent infection",
+          "Know the location of your nearest emergency medical center"
+        ]
+      },
+      "communication": {
+        "title": "Communication Plan",
+        "preview": "Designate a family meeting point and share your location.",
+        "bullets": [
+          "Designate a clear family meeting point outside your home",
+          "Share your real-time location with a trusted contact during emergencies",
+          "Have backup contacts — one local and one out-of-city",
+          "Agree on a single point of contact for all family members to check in with"
+        ]
+      },
+      "afterDisaster": {
+        "title": "After a Disaster",
+        "preview": "Avoid standing water and check for structural damage before re-entering.",
+        "bullets": [
+          "Avoid walking through standing water — it may be contaminated or electrically charged",
+          "Check for structural damage before re-entering any building",
+          "Report hazards such as downed power lines or gas leaks immediately",
+          "Use bottled or boiled water until tap water is declared safe"
+        ]
+      },
+      "helpingOthers": {
+        "title": "Helping Others",
+        "preview": "Assist elderly and disabled neighbors safely and responsibly.",
+        "bullets": [
+          "Assist elderly and disabled neighbors in evacuating if it is safe to do so",
+          "Do not enter unsafe or structurally damaged buildings",
+          "Contact NDRF (National Disaster Response Force) for professional rescue",
+          "Provide emotional support — disasters are traumatic for everyone involved"
+        ]
+      }
+    },
+    "emergencyContacts": {
+      "title": "Emergency Contacts",
+      "copyAll": "Copy All",
+      "copied": "Copied!",
+      "services": {
+        "disasterHelpline": "Disaster Helpline",
+        "nationalEmergency": "National Emergency",
+        "fireBrigade": "Fire Brigade",
+        "ambulance": "Ambulance",
+        "police": "Police",
+        "jaipurMunicipal": "Jaipur Municipal",
+        "districtCollector": "District Collector",
+        "ndrf": "NDRF Helpline"
+      }
+    },
+    "downloadGuide": {
+      "title": "Emergency Preparedness Guide",
+      "subtitle": "Complete PDF guide for offline use",
+      "downloadPdf": "Download PDF",
+      "comingSoon": "Coming Soon"
+    }
+  },
+  "about": {
+    "title": "About EvacuGuard",
+    "problem": {
+      "title": "The Problem",
+      "p1": "Jaipur faces severe flooding during monsoon season every year. Flash floods, waterlogged roads, and sudden infrastructure failures catch citizens off-guard. Historically, casualties have resulted not from the disasters themselves but from the lack of real-time, coordinated information to guide evacuations.",
+      "p2": "Emergency services struggle with fragmented communication, outdated maps, and delayed response. There is no unified platform that connects weather data, citizen reports, and shelter availability into a single actionable dashboard."
+    },
+    "solution": {
+      "title": "Our Solution",
+      "p1": "EvacuGuard is a real-time disaster management platform built specifically for Jaipur. It fuses live weather data from Open-Meteo, citizen hazard reports, and ML-based flood risk scoring into a live operational dashboard used by both citizens and administrators.",
+      "p2": "AI-powered routing calculates the safest evacuation paths around live hazards. Real-time WebSocket alerts notify users the moment conditions change. Citizen participation via the hazard report form feeds directly into the risk engine, making every user a first responder."
+    },
+    "architecture": {
+      "title": "System Architecture",
+      "dataSources": "Data Sources",
+      "backend": "EvacuGuard Backend",
+      "frontend": "Frontend",
+      "dataSourceItems": ["Open-Meteo API", "Citizen Reports", "Sensor Network"],
+      "backendItems": ["FastAPI", "Risk Engine", "Route Planner", "Alert Manager", "ML Model"],
+      "frontendItems": ["React Dashboard", "Map View", "Mobile-ready"]
+    },
+    "techStack": {
+      "title": "Technology Stack",
+      "usedFor": "Used for:"
+    },
+    "team": {
+      "title": "The Team",
+      "roles": {
+        "fullStack": "Full Stack Developer",
+        "mlEngineer": "ML Engineer",
+        "uiux": "UI/UX Designer",
+        "backend": "Backend Engineer"
+      }
+    },
+    "mission": {
+      "ourMission": "Our Mission",
+      "title": "Saving Lives with Intelligence",
+      "tagline": "Smarter evacuation · Faster response · Safer Jaipur",
+      "subtitle": "Because every second in a disaster is a life saved or lost",
+      "badge": "AI-Powered · Real-Time · Built for Jaipur"
+    }
+  },
+  "analytics": {
+    "title": "AI Risk Analytics",
+    "live": "LIVE",
+    "subtitle": "Powered by Random Forest ML — trained on 500+ Jaipur flood events",
+    "statLabels": {
+      "modelAccuracy": "Model Accuracy",
+      "zonesAnalyzed": "Zones Analyzed",
+      "activePredictions": "Active Predictions",
+      "dataPoints": "Data Points"
+    },
+    "featureImportance": {
+      "title": "Feature Importance",
+      "subtitle": "What drives risk prediction"
+    },
+    "zoneRiskAssessment": {
+      "title": "Zone Risk Assessment",
+      "subtitle": "Real-time model output for each Jaipur zone",
+      "columns": {
+        "zone": "Zone",
+        "score": "Score",
+        "severity": "Severity",
+        "primaryFactor": "Primary Factor",
+        "trend": "Trend"
+      }
+    },
+    "trendChart": {
+      "title": "24-Hour Risk Score Trend",
+      "subtitle": "Predicted risk trajectory across top zones",
+      "highRiskThreshold": "High Risk Threshold"
+    },
+    "pipeline": {
+      "title": "ML Model Pipeline",
+      "subtitle": "End-to-end flow from raw data to risk classification",
+      "stages": {
+        "dataCollection": {
+          "title": "Data Collection",
+          "points": ["500+ flood event records", "Real-time sensor feeds", "Satellite elevation data"]
+        },
+        "featureEngineering": {
+          "title": "Feature Engineering",
+          "points": ["Normalise 6 key variables", "Temporal lag features", "Geospatial encoding"]
+        },
+        "randomForest": {
+          "title": "Random Forest",
+          "points": ["100 decision trees", "Bootstrap aggregation", "Gini impurity splitting"]
+        },
+        "riskClassification": {
+          "title": "Risk Classification",
+          "points": ["4-tier severity output", "94.2% accuracy score", "Live zone alerts"]
+        }
+      }
+    },
+    "severityLabels": {
+      "critical": "CRITICAL",
+      "high": "HIGH",
+      "medium": "MEDIUM",
+      "low": "LOW"
+    }
+  },
+  "auth": {
+    "tagline": "AI-powered flood early warning for Jaipur",
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "emailAddress": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "phone": "Phone (+91-...)",
+    "address": "Address (e.g., Mansarovar, Jaipur)",
+    "signingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "continueAsGuest": "Continue as Guest",
+    "addEmergencyContact": "Add Emergency Contact (recommended)",
+    "emergencyContactName": "Emergency Contact Name",
+    "emergencyContactPhone": "Emergency Contact Phone",
+    "alreadyHaveAccount": "Already have an account?",
+    "backToHome": "← Back to Home",
+    "invalidEmail": "Invalid email or password",
+    "nameRequired": "Name is required",
+    "validEmailRequired": "Valid email required",
+    "minPassword": "Minimum 6 characters",
+    "passwordsNoMatch": "Passwords do not match",
+    "signupFailed": "Signup failed. Please try again.",
+    "strength": {
+      "tooShort": "Too short",
+      "weak": "Weak",
+      "good": "Good",
+      "strong": "Strong"
+    }
+  },
+  "adminLogin": {
+    "adminAccess": "Admin Access",
+    "restricted": "Restricted to authorized personnel only",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "authenticating": "Authenticating...",
+    "invalidCredentials": "Invalid credentials. Access denied.",
+    "backToDashboard": "← Back to Dashboard"
+  },
+  "profile": {
+    "admin": "ADMIN",
+    "citizen": "CITIZEN",
+    "personalInfo": "Personal Info",
+    "myReports": "My Reports",
+    "personalInformation": "Personal Information",
+    "edit": "Edit",
+    "save": "Save",
+    "saving": "Saving...",
+    "yourHazardReports": "Your Hazard Reports",
+    "noReportsYet": "No reports submitted yet.",
+    "reportAHazard": "Report a Hazard →",
+    "signOut": "Sign Out",
+    "labels": {
+      "fullName": "Full Name",
+      "phone": "Phone",
+      "address": "Address",
+      "emergencyContact": "Emergency Contact",
+      "emergencyPhone": "Emergency Phone"
+    }
+  },
+  "userMenu": {
+    "myProfile": "My Profile",
+    "myReports": "My Reports",
+    "adminPanel": "Admin Panel",
+    "signOut": "Sign Out",
+    "admin": "ADMIN",
+    "citizen": "CITIZEN"
+  },
+  "loading": {
+    "loading": "Loading..."
+  },
+  "adminRoute": {
+    "accessDenied": "Access Denied",
+    "noAdminPrivileges": "You don't have admin privileges.",
+    "goToDashboard": "Go to Dashboard"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "or": "or",
+    "noData": "No data"
+  }
+}

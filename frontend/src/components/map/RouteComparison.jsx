@@ -4,6 +4,7 @@
  */
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Route, Shield, Zap, Scale, X, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const BADGE_CONFIG = {
   safe:    { color: '#10b981', bg: 'rgba(16,185,129,0.15)',  border: 'rgba(16,185,129,0.35)',  Icon: Shield },
@@ -78,6 +79,7 @@ function RouteOptionCard({ option, index, isSelected, onSelect }) {
             className="text-xs"
             style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}
           >
+            {/* Avoids count rendered by parent via t() */}
             Avoids {option.risk_zones_avoided} zones
           </span>
         </div>
@@ -105,6 +107,7 @@ function RouteOptionCard({ option, index, isSelected, onSelect }) {
 }
 
 export default function RouteComparison({ options = [], selectedIndex = 0, onSelect, onClose, visible }) {
+  const { t } = useTranslation();
   return (
     <AnimatePresence>
       {visible && options.length > 0 && (
@@ -129,13 +132,13 @@ export default function RouteComparison({ options = [], selectedIndex = 0, onSel
                 className="text-sm font-semibold tracking-wide"
                 style={{ color: 'var(--text-primary)', fontFamily: "'Orbitron', sans-serif" }}
               >
-                Choose Route
+                {t('routeComparison.chooseRoute')}
               </h3>
               <p
                 className="text-xs mt-0.5"
                 style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}
               >
-                {options.length} options computed — tap to activate
+                {t('routeComparison.optionsComputed', { count: options.length })}
               </p>
             </div>
             <button

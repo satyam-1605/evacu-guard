@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:lang(hi), [data-lang="hi"] {
+  font-family: "Exo 2", "Noto Sans Devanagari", sans-serif;
+}
+
 :root {
   --bg-primary: #0a0a0f;
   --bg-secondary: #111118;

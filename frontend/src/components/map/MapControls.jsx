@@ -3,14 +3,15 @@
  * Drop-in for EvacuationMap's inline controls.
  */
 import { motion } from 'framer-motion';
-import { AlertTriangle, Home, Route, Users, Thermometer } from 'lucide-react';
+import { AlertTriangle, Home, Route, Users } from 'lucide-react';
 import { useMap } from 'react-leaflet';
+import { useTranslation } from 'react-i18next';
 
-const LAYER_DEFS = [
-  { key: 'hazards',  label: 'Hazards',  color: '#ef4444', Icon: AlertTriangle },
-  { key: 'shelters', label: 'Shelters', color: '#10b981', Icon: Home          },
-  { key: 'routes',   label: 'Routes',   color: '#3b82f6', Icon: Route         },
-  { key: 'crowd',    label: 'Crowd',    color: '#f59e0b', Icon: Users         },
+const LAYER_KEYS = [
+  { key: 'hazards',  color: '#ef4444', Icon: AlertTriangle },
+  { key: 'shelters', color: '#10b981', Icon: Home          },
+  { key: 'routes',   color: '#3b82f6', Icon: Route         },
+  { key: 'crowd',    color: '#f59e0b', Icon: Users         },
 ];
 
 function ZoomButton({ label, onClick }) {
@@ -45,6 +46,14 @@ function ZoomControls() {
 }
 
 function LayerToggles({ layers, onToggle }) {
+  const { t } = useTranslation();
+  const LAYER_DEFS = LAYER_KEYS.map(({ key, color, Icon }) => ({
+    key,
+    label: t(`mapControls.${key}`),
+    color,
+    Icon,
+  }));
+
   return (
     <div className="absolute top-4 left-4 z-[1000] flex flex-wrap gap-2 max-w-xs">
       {LAYER_DEFS.map(({ key, label, color, Icon }) => {

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Map, Brain, Route, Globe2, Users, Building2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 function TiltCard({ children, className = '', style = {} }) {
   const [transform, setTransform] = useState('perspective(1000px)');
@@ -58,6 +59,7 @@ function CapacityBars() {
 
 // Mini accuracy gauge
 function AccuracyGauge() {
+  const { t } = useTranslation();
   const val = 94.2;
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -88,7 +90,7 @@ function AccuracyGauge() {
           <span className="text-lg font-bold text-emerald-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
             {val}%
           </span>
-          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Accuracy</span>
+          <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('features.accuracy')}</span>
         </div>
       </div>
       <div className="flex flex-col gap-2 flex-1">
@@ -143,73 +145,36 @@ function RouteAnimation() {
   );
 }
 
-const features = [
-  {
-    id: 'map',
-    icon: Map,
-    title: 'Live Hazard Map',
-    desc: 'CartoDB dark map with real-time flood zone overlays, shelter markers, and animated evacuation routes.',
-    accent: '#3b82f6',
-    span: 'md:col-span-2',
-    content: <RouteAnimation />,
-  },
-  {
-    id: 'ml',
-    icon: Brain,
-    title: 'ML Risk Prediction',
-    desc: 'Random Forest with 6 features. Feature importances drive real-time risk classification.',
-    accent: '#9333ea',
-    span: '',
-    content: <AccuracyGauge />,
-  },
-  {
-    id: 'route',
-    icon: Route,
-    title: 'Dynamic Routing',
-    desc: 'Dijkstra + OSRM. Hazard penalties weight roads: 1× safe → 100× critical.',
-    accent: '#10b981',
-    span: '',
-    content: null,
-  },
-  {
-    id: 'alerts',
-    icon: Globe2,
-    title: 'Multilingual Alerts',
-    desc: 'Emergency broadcasts in Hindi and English with priority severity levels.',
-    accent: '#f59e0b',
-    span: '',
-    content: (
-      <div className="mt-3 space-y-2">
-        <div className="px-3 py-2 rounded-lg text-xs" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', fontFamily: "'Exo 2', sans-serif" }}>
-          ⚠ मानसरोवर में बाढ़ — तत्काल निकासी
-        </div>
-        <div className="px-3 py-2 rounded-lg text-xs" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', color: '#f87171', fontFamily: "'Exo 2', sans-serif" }}>
-          ⚠ Mansarovar Flood Alert — Evacuate Now
-        </div>
-      </div>
-    ),
-  },
-  {
-    id: 'reports',
-    icon: Users,
-    title: 'Crowd Reports',
-    desc: '3+ reports in 30 min auto-escalate zone risk. Citizens power the system.',
-    accent: '#f97316',
-    span: '',
-    content: null,
-  },
-  {
-    id: 'shelter',
-    icon: Building2,
-    title: 'Smart Shelter Match',
-    desc: 'KNN scoring: 60% weight distance + 40% remaining capacity across 7 Jaipur shelters.',
-    accent: '#10b981',
-    span: '',
-    content: <CapacityBars />,
-  },
-];
+const FEATURE_ICONS = [Map, Brain, Route, Globe2, Users, Building2];
+const FEATURE_ACCENTS = ['#3b82f6', '#9333ea', '#10b981', '#f59e0b', '#f97316', '#10b981'];
+const FEATURE_SPANS = ['md:col-span-2', '', '', '', '', ''];
+const FEATURE_IDS = ['map', 'ml', 'route', 'alerts', 'reports', 'shelter'];
 
 export default function FeaturesGrid() {
+  const { t } = useTranslation();
+
+  const features = FEATURE_IDS.map((id, i) => ({
+    id,
+    icon: FEATURE_ICONS[i],
+    title: t(`features.${id}.title`),
+    desc: t(`features.${id}.desc`),
+    accent: FEATURE_ACCENTS[i],
+    span: FEATURE_SPANS[i],
+    content: id === 'map' ? <RouteAnimation /> :
+             id === 'ml' ? <AccuracyGauge /> :
+             id === 'alerts' ? (
+               <div className="mt-3 space-y-2">
+                 <div className="px-3 py-2 rounded-lg text-xs" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', fontFamily: "'Exo 2', sans-serif" }}>
+                   ⚠ मानसरोवर में बाढ़ — तत्काल निकासी
+                 </div>
+                 <div className="px-3 py-2 rounded-lg text-xs" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)', color: '#f87171', fontFamily: "'Exo 2', sans-serif" }}>
+                   ⚠ Mansarovar Flood Alert — Evacuate Now
+                 </div>
+               </div>
+             ) :
+             id === 'shelter' ? <CapacityBars /> : null,
+  }));
+
   return (
     <section id="features" className="py-28 px-6" style={{ background: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto">
@@ -221,10 +186,10 @@ export default function FeaturesGrid() {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-widest uppercase text-blue-400 mb-4 font-jetbrains" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            — Core Capabilities —
+            {t('features.sectionLabel')}
           </p>
           <h2 className="text-5xl font-bold" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-            System Features
+            {t('features.title')}
           </h2>
         </motion.div>
 

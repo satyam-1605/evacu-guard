@@ -1,15 +1,19 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Navigation, Users } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { mockShelters } from '../../data/mockData';
+import { fetchShelters } from '../../services/api';
 import GlowButton from '../shared/GlowButton';
 
 function CapacityBar({ current, total }) {
+  const { t } = useTranslation();
   const pct = Math.round((current / total) * 100);
   const color = pct > 80 ? '#ef4444' : pct > 50 ? '#f59e0b' : '#10b981';
   return (
     <div>
       <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-        <span>{current} / {total} capacity</span>
+        <span>{t('shelterPanel.capacity', { current, total })}</span>
         <span style={{ color }}>{pct}%</span>
       </div>
       <div className="h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
@@ -25,14 +29,22 @@ function CapacityBar({ current, total }) {
   );
 }
 
-export default function ShelterPanel({ onNavigate }) {
-  const top3 = mockShelters.slice(0, 3);
+export default function ShelterPanel({ onNavigate, location }) {
+  const [shelters, setShelters] = useState(mockShelters);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    fetchShelters(location?.lat ?? null, location?.lng ?? null)
+      .then(data => setShelters(Array.isArray(data) ? data : mockShelters));
+  }, [location?.lat, location?.lng]);
+
+  const top3 = shelters.slice(0, 3);
 
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-bold tracking-wide uppercase" style={{ color: 'var(--text-primary)', fontFamily: "'Orbitron', sans-serif" }}>
-          Nearest Shelters
+          {t('shelterPanel.title')}
         </h3>
         <Users size={14} style={{ color: 'var(--text-muted)' }} />
       </div>
@@ -55,7 +67,7 @@ export default function ShelterPanel({ onNavigate }) {
                     {shelter.name}
                   </p>
                   <p className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-                    {shelter.distance_km} km away
+                    {t('shelterPanel.kmAway', { km: shelter.distance_km })}
                   </p>
                 </div>
                 <span
@@ -76,7 +88,7 @@ export default function ShelterPanel({ onNavigate }) {
                   fullWidth
                   onClick={() => onNavigate?.(shelter)}
                 >
-                  Navigate
+                  {t('shelterPanel.navigate')}
                 </GlowButton>
               </div>
             </motion.div>

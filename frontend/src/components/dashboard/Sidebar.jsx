@@ -2,23 +2,23 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, Map, Building2, Bell, AlertTriangle,
-  ChevronLeft, ChevronRight, Zap, CloudRain, Wind, Droplets, Thermometer
+  LayoutDashboard, Map, Building2, AlertTriangle,
+  ChevronLeft, ChevronRight, Zap, CloudRain, Droplets, Thermometer, Home
 } from 'lucide-react';
-import { mockWeather, mockAlerts } from '../../data/mockData';
-
-const navItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', key: 'dashboard' },
-  { icon: Map, label: 'Evacuation Map', path: '/dashboard', key: 'map' },
-  { icon: Building2, label: 'Shelters', path: '/dashboard', key: 'shelters' },
-  { icon: Bell, label: 'Alerts', path: '/dashboard', key: 'alerts', badge: mockAlerts.filter(a => a.severity === 'critical').length },
-  { icon: AlertTriangle, label: 'Report Hazard', path: '/dashboard', key: 'report' },
-];
+import { useTranslation } from 'react-i18next';
+import { useWeather } from '../../hooks/useWeather';
 
 export default function Sidebar({ activeKey, onNavChange, onSOS }) {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
-  const weather = mockWeather;
+  const { weather } = useWeather();
+  const { t } = useTranslation();
+
+  const navItems = [
+    { icon: LayoutDashboard, label: t('sidebar.dashboard'), path: '/dashboard', key: 'dashboard' },
+    { icon: Map, label: t('sidebar.evacuationMap'), path: '/dashboard', key: 'map' },
+    { icon: Building2, label: t('sidebar.shelters'), path: '/dashboard', key: 'shelters' },
+  ];
 
   return (
     <motion.aside
@@ -117,7 +117,7 @@ export default function Sidebar({ activeKey, onNavChange, onSOS }) {
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
-                Jaipur Weather
+                {t('sidebar.jaipurWeather')}
               </span>
               <CloudRain size={13} color="#3b82f6" />
             </div>
@@ -136,11 +136,32 @@ export default function Sidebar({ activeKey, onNavChange, onSOS }) {
               </div>
             </div>
             <div className="mt-2 px-2 py-1 rounded-lg text-center text-xs font-bold" style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.2)', fontFamily: "'JetBrains Mono', monospace" }}>
-              IMD {weather.alert_level} ALERT
+              {t('sidebar.imdAlert', { level: weather.alert_level })}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Home button */}
+      <div className="px-3 pb-2">
+        <button
+          onClick={() => navigate('/')}
+          className="w-full py-2 rounded-xl flex items-center justify-center gap-2 transition-all"
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            color: 'var(--text-muted)',
+            fontFamily: "'Exo 2', sans-serif",
+            fontSize: 12,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
+          title={t('sidebar.backToLanding')}
+        >
+          <Home size={14} />
+          {!collapsed && t('sidebar.landingPage')}
+        </button>
+      </div>
 
       {/* SOS Button */}
       <div className="p-3 pt-0">
@@ -157,7 +178,7 @@ export default function Sidebar({ activeKey, onNavChange, onSOS }) {
           }}
         >
           <AlertTriangle size={14} />
-          {!collapsed && 'EMERGENCY SOS'}
+          {!collapsed && t('sidebar.emergencySos')}
         </button>
       </div>
     </motion.aside>

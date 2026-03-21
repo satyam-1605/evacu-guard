@@ -1,13 +1,17 @@
+import { useTranslation } from 'react-i18next';
+
 export default function MapLegend() {
+  const { t } = useTranslation();
+
   const items = [
-    { color: '#10b981', label: 'Safe', dot: true },
-    { color: '#f59e0b', label: 'Medium', dot: true },
-    { color: '#f97316', label: 'High', dot: true },
-    { color: '#ef4444', label: 'Critical', dot: true },
-    { color: '#10b981', label: 'Shelter', icon: 'S' },
-    { color: '#3b82f6', label: 'Route', line: true },
-    { color: '#ef4444', label: 'Blocked Road', icon: '✕' },
-    { color: '#3b82f6', label: 'You', dot: true },
+    { color: '#10b981', label: t('mapLegend.safe'), dot: true },
+    { color: '#f59e0b', label: t('mapLegend.medium'), dot: true },
+    { color: '#f97316', label: t('mapLegend.high'), dot: true },
+    { color: '#ef4444', label: t('mapLegend.critical'), dot: true },
+    { color: '#10b981', label: t('mapLegend.shelter'), icon: 'S' },
+    { color: '#3b82f6', label: t('mapLegend.route'), line: true },
+    { color: '#ef4444', label: t('mapLegend.blockedRoad'), icon: '✕' },
+    { color: '#3b82f6', label: t('mapLegend.you'), dot: true },
   ];
 
   return (
@@ -16,7 +20,7 @@ export default function MapLegend() {
       style={{ background: 'rgba(17,17,24,0.9)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)' }}
     >
       <span className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-        Legend
+        {t('mapLegend.legend')}
       </span>
       {items.map((item, i) => (
         <div key={i} className="flex items-center gap-2">

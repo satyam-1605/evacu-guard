@@ -1,8 +1,9 @@
 import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Shield, MapPin, Zap } from 'lucide-react';
+import { ArrowRight, BarChart2, MapPin, Zap } from 'lucide-react';
 import { Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import Globe3D from './Globe3D';
 import TypewriterText from './TypewriterText';
 import ParticleBackground from './ParticleBackground';
@@ -15,6 +16,7 @@ export default function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const { location } = useLocation();
   const heroRef = useRef(null);
+  const { t } = useTranslation();
 
   const handleMouseMove = useCallback((e) => {
     if (!heroRef.current) return;
@@ -26,10 +28,10 @@ export default function HeroSection() {
   }, []);
 
   const stats = [
-    { value: 12, label: 'Active Hazard Zones', accent: '#ef4444', pulse: true, suffix: '' },
-    { value: 2150, label: 'Shelter Capacity', accent: '#10b981', suffix: '' },
-    { value: 2.8, label: 'Min Response Time', accent: '#3b82f6', prefix: '<', suffix: ' min', decimals: 1 },
-    { value: 3, label: 'Scenarios Ready', accent: '#f59e0b', suffix: '' },
+    { value: 12, label: t('hero.stats.activeHazardZones'), accent: '#ef4444', pulse: true, suffix: '' },
+    { value: 2150, label: t('hero.stats.shelterCapacity'), accent: '#10b981', suffix: '' },
+    { value: 2.8, label: t('hero.stats.minResponseTime'), accent: '#3b82f6', prefix: '<', suffix: ' min', decimals: 1 },
+    { value: 3, label: t('hero.stats.scenariosReady'), accent: '#f59e0b', suffix: '' },
   ];
 
   return (
@@ -68,7 +70,7 @@ export default function HeroSection() {
           >
             <Zap size={13} color="#10b981" />
             <span className="text-xs tracking-widest uppercase font-jetbrains" style={{ color: 'var(--text-secondary)', fontFamily: "'JetBrains Mono', monospace" }}>
-              Hackerz Street 4.0 · IEEE CS · MUJ
+              {t('hero.badge')}
             </span>
           </motion.div>
 
@@ -102,7 +104,7 @@ export default function HeroSection() {
             style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}
           >
             <TypewriterText
-              text="AI-Powered Evacuation Intelligence for Jaipur"
+              text={t('hero.subtitle')}
               delay={50}
             />
           </motion.div>
@@ -115,7 +117,7 @@ export default function HeroSection() {
             className="text-base leading-relaxed max-w-lg"
             style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}
           >
-            Real-time flood detection · ML-powered risk scoring · Dynamic route planning · Crowd-sourced hazard reporting — all in one command center for Jaipur's disaster response.
+            {t('hero.description')}
           </motion.p>
 
           {/* Location badge */}
@@ -130,7 +132,7 @@ export default function HeroSection() {
               {location
                 ? location.isFallback
                   ? '26.9124°N, 75.7873°E — Jaipur, Rajasthan'
-                  : `${location.lat.toFixed(4)}°N, ${location.lng.toFixed(4)}°E — Your Location`
+                  : `${location.lat.toFixed(4)}°N, ${location.lng.toFixed(4)}°E — ${t('hero.yourLocation')}`
                 : '26.9124°N, 75.7873°E — Jaipur, Rajasthan'
               }
             </span>
@@ -150,15 +152,15 @@ export default function HeroSection() {
               iconRight
               onClick={() => navigate('/dashboard')}
             >
-              Launch Dashboard
+              {t('hero.launchDashboard')}
             </GlowButton>
             <GlowButton
               variant="secondary"
               size="lg"
-              icon={Shield}
-              onClick={() => navigate('/admin')}
+              icon={BarChart2}
+              onClick={() => navigate('/analytics')}
             >
-              Admin Panel
+              {t('hero.viewAnalytics')}
             </GlowButton>
           </motion.div>
         </div>
@@ -204,7 +206,7 @@ export default function HeroSection() {
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400" style={{ animation: 'pulseDot 1.5s ease-in-out infinite' }} />
             <span className="text-xs font-jetbrains text-emerald-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              Live — Jaipur Flood Monitor
+              {t('hero.liveMonitor')}
             </span>
           </motion.div>
         </motion.div>

@@ -1,6 +1,8 @@
-import { Github, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="relative py-16 px-6 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
       {/* Grid lines */}
@@ -20,20 +22,21 @@ export default function Footer() {
 
         {/* Description */}
         <p className="text-sm max-w-lg" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif", lineHeight: 1.7 }}>
-          AI-Powered Evacuation Route Planning & Crowd Movement System.<br />
-          Built for Jaipur, Rajasthan — protecting lives through intelligent disaster response.
+          {t('footer.description').split('\n').map((line, i) => (
+            <span key={i}>{line}{i === 0 && <br />}</span>
+          ))}
         </p>
 
-        {/* Hackathon badge */}
+        {/* Punchline badge */}
         <div className="flex items-center gap-2 px-5 py-2 rounded-xl glass-card-sm">
           <span className="text-xs tracking-widest uppercase font-jetbrains" style={{ color: 'var(--text-secondary)', fontFamily: "'JetBrains Mono', monospace" }}>
-            Built for&nbsp;
+            {t('footer.smarter')} ·&nbsp;
           </span>
           <span className="text-xs font-bold text-emerald-400 font-jetbrains" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            Hackerz Street 4.0
+            {t('footer.faster')}
           </span>
           <span className="text-xs tracking-widest uppercase font-jetbrains" style={{ color: 'var(--text-secondary)', fontFamily: "'JetBrains Mono', monospace" }}>
-            &nbsp;·&nbsp;Manipal University Jaipur&nbsp;·&nbsp;IEEE Computer Society
+            &nbsp;· {t('footer.safer')}
           </span>
         </div>
 
@@ -41,7 +44,7 @@ export default function Footer() {
         <div className="w-32 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
 
         <p className="text-xs font-jetbrains" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-          Disaster Management Track · Problem #3: Evacuation Route Planning & Crowd Movement
+          {t('footer.tagline')}
         </p>
       </div>
     </footer>

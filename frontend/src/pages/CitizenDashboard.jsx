@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ShieldCheck, Clock, Users, Zap, Navigation2, Bell, AlertTriangle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Sidebar from '../components/dashboard/Sidebar';
 import TopBar from '../components/dashboard/TopBar';
 import StatsBar from '../components/dashboard/StatsBar';
@@ -13,13 +14,22 @@ import SheltersView from '../components/dashboard/SheltersView';
 import AlertsView from '../components/dashboard/AlertsView';
 import { useLocation } from '../hooks/useLocation';
 import { mockStats, mockAlerts, mockShelters } from '../data/mockData';
+import { fetchStats } from '../services/api';
 
 export default function CitizenDashboard() {
   const [activeNav, setActiveNav] = useState('dashboard');
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [selectedShelter, setSelectedShelter] = useState(null);
   const [searchTarget, setSearchTarget] = useState(null);
+  const [liveStats, setLiveStats] = useState(mockStats);
   const { location, loading: locLoading, error: locError, refresh: refreshLocation } = useLocation();
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    fetchStats().then(data => setLiveStats(data)).catch(() => {});
+    const id = setInterval(() => fetchStats().then(data => setLiveStats(data)).catch(() => {}), 10000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleNavChange = (key) => {
     if (key === 'report') {
@@ -36,16 +46,16 @@ export default function CitizenDashboard() {
   const renderMainContent = () => {
     // Overview dashboard
     if (activeNav === 'dashboard') {
-      const stats = mockStats;
+      const stats = liveStats;
       const criticalAlerts = mockAlerts.filter(a => a.severity === 'critical' || a.severity === 'high');
       const openShelters = mockShelters.filter(s => s.status === 'open');
       const statCards = [
-        { label: 'Active Hazard Zones', value: stats.active_zones, icon: AlertTriangle, color: '#ef4444', suffix: ' zones' },
-        { label: 'Open Shelters', value: openShelters.length, icon: ShieldCheck, color: '#10b981', suffix: ` / ${mockShelters.length}` },
-        { label: 'Avg Evacuation Time', value: `${stats.avg_evacuation_time} min`, icon: Clock, color: '#3b82f6', suffix: '' },
-        { label: 'Citizens Affected', value: `${(stats.citizens_affected / 1000).toFixed(0)}K`, icon: Users, color: '#f59e0b', suffix: '' },
-        { label: 'Shelter Capacity', value: stats.occupied_capacity, icon: MapPin, color: '#a855f7', suffix: `/${stats.total_shelter_capacity}` },
-        { label: 'Citizen Reports', value: stats.active_reports, icon: Zap, color: '#f97316', suffix: ' active' },
+        { label: t('dashboard.statLabels.activeHazardZones'), value: stats.active_zones, icon: AlertTriangle, color: '#ef4444', suffix: ` ${t('dashboard.zones')}` },
+        { label: t('dashboard.statLabels.openShelters'), value: openShelters.length, icon: ShieldCheck, color: '#10b981', suffix: ` / ${mockShelters.length}` },
+        { label: t('dashboard.statLabels.avgEvacuationTime'), value: `${stats.avg_evacuation_time} min`, icon: Clock, color: '#3b82f6', suffix: '' },
+        { label: t('dashboard.statLabels.citizensAffected'), value: `${(stats.citizens_affected / 1000).toFixed(0)}K`, icon: Users, color: '#f59e0b', suffix: '' },
+        { label: t('dashboard.statLabels.shelterCapacity'), value: stats.occupied_capacity, icon: MapPin, color: '#a855f7', suffix: `/${stats.total_shelter_capacity}` },
+        { label: t('dashboard.statLabels.citizenReports'), value: stats.active_reports, icon: Zap, color: '#f97316', suffix: ` ${t('dashboard.active')}` },
       ];
 
       return (
@@ -62,10 +72,10 @@ export default function CitizenDashboard() {
             {/* Heading */}
             <div>
               <h1 className="text-xl font-bold mb-0.5" style={{ color: 'var(--text-primary)', fontFamily: "'Orbitron', sans-serif" }}>
-                Command Overview
+                {t('dashboard.commandOverview')}
               </h1>
               <p className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
-                Real-time situational awareness — Jaipur, Rajasthan
+                {t('dashboard.realtime')}
               </p>
             </div>
 
@@ -108,7 +118,7 @@ export default function CitizenDashboard() {
 
             {/* Shelter panel */}
             <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <ShelterPanel onNavigate={(s) => { setSelectedShelter(s); setActiveNav('map'); }} />
+              <ShelterPanel onNavigate={(s) => { setSelectedShelter(s); setActiveNav('map'); }} location={location} />
             </div>
           </div>
 
@@ -119,7 +129,7 @@ export default function CitizenDashboard() {
           >
             {/* Risk gauge */}
             <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <RiskGauge score={72} />
+              <RiskGauge />
             </div>
 
             {/* Quick actions */}
@@ -132,7 +142,7 @@ export default function CitizenDashboard() {
                 style={{ background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.35)', color: '#10b981', fontFamily: "'Exo 2', sans-serif" }}
               >
                 <Navigation2 size={14} />
-                Open Evacuation Map
+                {t('dashboard.openEvacuationMap')}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -142,7 +152,7 @@ export default function CitizenDashboard() {
                 style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', color: '#ef4444', fontFamily: "'Exo 2', sans-serif" }}
               >
                 <Bell size={14} />
-                View All Alerts
+                {t('dashboard.viewAllAlerts')}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -152,7 +162,7 @@ export default function CitizenDashboard() {
                 style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.25)', color: '#3b82f6', fontFamily: "'Exo 2', sans-serif" }}
               >
                 <ShieldCheck size={14} />
-                View All Shelters
+                {t('dashboard.viewAllShelters')}
               </motion.button>
             </div>
 
@@ -161,9 +171,9 @@ export default function CitizenDashboard() {
               className="rounded-xl p-4 text-center"
               style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)' }}
             >
-              <p className="text-xs mb-1" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>Current Alert Level</p>
+              <p className="text-xs mb-1" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>{t('dashboard.currentAlertLevel')}</p>
               <p className="text-lg font-black" style={{ color: '#f59e0b', fontFamily: "'Orbitron', sans-serif" }}>LEVEL 2</p>
-              <p className="text-xs font-bold tracking-widest" style={{ color: '#f59e0b', fontFamily: "'JetBrains Mono', monospace" }}>WARNING</p>
+              <p className="text-xs font-bold tracking-widest" style={{ color: '#f59e0b', fontFamily: "'JetBrains Mono', monospace" }}>{t('dashboard.warning')}</p>
             </div>
           </div>
         </motion.div>
@@ -247,14 +257,14 @@ export default function CitizenDashboard() {
               className="rounded-2xl p-4"
               style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
             >
-              <ShelterPanel onNavigate={setSelectedShelter} />
+              <ShelterPanel onNavigate={setSelectedShelter} location={location} />
             </div>
 
             <div
               className="rounded-2xl p-4"
               style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
             >
-              <RiskGauge score={72} />
+              <RiskGauge />
             </div>
           </div>
         </motion.div>

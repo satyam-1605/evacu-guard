@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Waves, CloudLightning, AlertTriangle, Play, CheckCircle, X, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { mockScenarios } from '../../data/mockData';
 import GlowButton from '../shared/GlowButton';
 import { activateScenario } from '../../services/api';
@@ -13,6 +14,7 @@ const accentMap = {
 };
 
 function ConfirmModal({ scenario, onConfirm, onCancel }) {
+  const { t } = useTranslation();
   const Icon = iconMap[scenario.id] || AlertTriangle;
   const cfg = accentMap[scenario.accent] || accentMap.danger;
 
@@ -36,21 +38,21 @@ function ConfirmModal({ scenario, onConfirm, onCancel }) {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Icon size={18} color={cfg.color} />
-            <span className="font-bold text-sm" style={{ color: 'var(--text-primary)', fontFamily: "'Orbitron', sans-serif" }}>Confirm Activation</span>
+            <span className="font-bold text-sm" style={{ color: 'var(--text-primary)', fontFamily: "'Orbitron', sans-serif" }}>{t('scenarioSimulator.confirmActivation')}</span>
           </div>
           <button onClick={onCancel} style={{ color: 'var(--text-muted)' }}><X size={16} /></button>
         </div>
 
         <p className="text-sm mb-2" style={{ color: 'var(--text-primary)', fontFamily: "'Exo 2', sans-serif" }}>
-          Activate scenario: <strong style={{ color: cfg.color }}>{scenario.name}</strong>?
+          {t('scenarioSimulator.activateScenario')} <strong style={{ color: cfg.color }}>{scenario.name}</strong>?
         </p>
         <p className="text-xs mb-4" style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}>
-          This will escalate {scenario.zones_affected} zones and alert ~{scenario.estimated_evacuees.toLocaleString()} residents via all channels.
+          {t('scenarioSimulator.willEscalate', { zones: scenario.zones_affected, evacuees: scenario.estimated_evacuees.toLocaleString() })}
         </p>
 
         <div className="flex gap-3">
-          <GlowButton variant="ghost" size="sm" onClick={onCancel} className="flex-1">Cancel</GlowButton>
-          <GlowButton variant="danger" size="sm" icon={Play} onClick={onConfirm} className="flex-1">Activate</GlowButton>
+          <GlowButton variant="ghost" size="sm" onClick={onCancel} className="flex-1">{t('scenarioSimulator.cancel')}</GlowButton>
+          <GlowButton variant="danger" size="sm" icon={Play} onClick={onConfirm} className="flex-1">{t('scenarioSimulator.activate')}</GlowButton>
         </div>
       </motion.div>
     </motion.div>
@@ -58,6 +60,7 @@ function ConfirmModal({ scenario, onConfirm, onCancel }) {
 }
 
 export default function ScenarioSimulator() {
+  const { t } = useTranslation();
   const [confirming, setConfirming] = useState(null);
   const [active, setActive] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -89,7 +92,7 @@ export default function ScenarioSimulator() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-bold uppercase tracking-widest" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-          Scenario Simulator
+          {t('scenarioSimulator.title')}
         </h3>
         <span
           className="text-xs px-2 py-1 rounded-lg"
@@ -100,7 +103,7 @@ export default function ScenarioSimulator() {
             fontFamily: "'JetBrains Mono', monospace",
           }}
         >
-          {apiStatus === 'live' ? '● LIVE' : apiStatus === 'simulated' ? 'SIMULATED' : 'READY'}
+          {apiStatus === 'live' ? t('scenarioSimulator.live') : apiStatus === 'simulated' ? t('scenarioSimulator.simulated') : t('scenarioSimulator.ready')}
         </span>
       </div>
 
@@ -116,7 +119,7 @@ export default function ScenarioSimulator() {
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-red-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                ⚡ ACTIVATING: {active.name.toUpperCase()}
+                {t('scenarioSimulator.activating', { name: active.name.toUpperCase() })}
               </span>
               <span className="text-xs text-red-400" style={{ fontFamily: "'JetBrains Mono', monospace" }}>{progress}%</span>
             </div>
@@ -128,8 +131,8 @@ export default function ScenarioSimulator() {
             </div>
             <p className="text-xs mt-2" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
               {apiStatus === 'live'
-                ? `⚡ Live — escalating ${active.zones_affected} zones, broadcasting WebSocket alerts...`
-                : `Simulating ${active.zones_affected} zone escalations...`}
+                ? t('scenarioSimulator.escalating', { zones: active.zones_affected })
+                : t('scenarioSimulator.simulating', { zones: active.zones_affected })}
             </p>
           </motion.div>
         )}
@@ -143,7 +146,7 @@ export default function ScenarioSimulator() {
           >
             <CheckCircle size={14} color="#10b981" />
             <span className="text-xs text-emerald-400 font-bold" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-              {active.name} scenario fully activated
+              {t('scenarioSimulator.fullyActivated', { name: active.name })}
             </span>
           </motion.div>
         )}
@@ -154,6 +157,7 @@ export default function ScenarioSimulator() {
           const Icon = iconMap[scenario.id] || AlertTriangle;
           const cfg = accentMap[scenario.accent] || accentMap.danger;
           const isActive = active?.id === scenario.id && progress >= 100;
+          const isRunning = active?.id === scenario.id && progress < 100;
 
           return (
             <motion.div
@@ -161,58 +165,87 @@ export default function ScenarioSimulator() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="p-5 rounded-2xl flex flex-col gap-3 relative overflow-hidden"
+              className="rounded-2xl flex flex-col relative overflow-hidden"
               style={{
-                background: isActive ? cfg.bg : 'rgba(255,255,255,0.03)',
-                border: `1px solid ${isActive ? cfg.border : 'rgba(255,255,255,0.08)'}`,
+                background: `linear-gradient(145deg, ${cfg.bg}, rgba(10,10,15,0.6))`,
+                border: `1px solid ${cfg.border}`,
+                boxShadow: isActive ? `0 0 24px ${cfg.color}20` : 'none',
               }}
             >
+              {/* Top accent line */}
               <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
-                style={{ background: `linear-gradient(90deg, transparent, ${cfg.color}50, transparent)` }} />
+                style={{ background: `linear-gradient(90deg, transparent, ${cfg.color}80, transparent)` }} />
 
-              {isActive && (
-                <div className="absolute top-3 right-3">
-                  <CheckCircle size={14} color={cfg.color} />
+              {/* Card body */}
+              <div className="p-5 flex flex-col gap-3 flex-1">
+                {/* Icon + status */}
+                <div className="flex items-start justify-between">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ background: `${cfg.color}18`, border: `1px solid ${cfg.color}35`, boxShadow: `0 0 16px ${cfg.color}20` }}>
+                    <Icon size={22} color={cfg.color} />
+                  </div>
+                  {isActive && (
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg"
+                      style={{ background: `${cfg.color}15`, border: `1px solid ${cfg.color}30` }}>
+                      <CheckCircle size={11} color={cfg.color} />
+                      <span className="text-xs font-bold" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>ACTIVE</span>
+                    </div>
+                  )}
+                  {isRunning && (
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg"
+                      style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.3)' }}>
+                      <Loader2 size={11} color="#ef4444" className="animate-spin" />
+                      <span className="text-xs font-bold" style={{ color: '#ef4444', fontFamily: "'JetBrains Mono', monospace" }}>RUNNING</span>
+                    </div>
+                  )}
                 </div>
-              )}
 
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: cfg.bg, border: `1px solid ${cfg.border}` }}>
-                <Icon size={20} color={cfg.color} />
-              </div>
-
-              <div>
-                <h4 className="font-bold text-sm mb-0.5" style={{ color: 'var(--text-primary)', fontFamily: "'Exo 2', sans-serif" }}>
-                  {scenario.name}
-                </h4>
-                <p className="text-xs mb-2" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>
-                  {scenario.subtitle}
-                </p>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}>
-                  {scenario.description}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 py-2 border-y" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+                {/* Name + subtitle */}
                 <div>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Zones</p>
-                  <p className="text-sm font-bold" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>{scenario.zones_affected}</p>
+                  <h4 className="font-bold text-sm mb-0.5" style={{ color: 'var(--text-primary)', fontFamily: "'Exo 2', sans-serif" }}>
+                    {scenario.name}
+                  </h4>
+                  <p className="text-xs font-semibold mb-2" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>
+                    {scenario.subtitle}
+                  </p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)', fontFamily: "'Exo 2', sans-serif" }}>
+                    {scenario.description}
+                  </p>
                 </div>
-                <div>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Evacuees</p>
-                  <p className="text-sm font-bold" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>{(scenario.estimated_evacuees / 1000).toFixed(0)}K</p>
+
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-2 pt-2 mt-auto" style={{ borderTop: `1px solid ${cfg.color}15` }}>
+                  <div className="rounded-lg p-2" style={{ background: `${cfg.color}08` }}>
+                    <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>{t('scenarioSimulator.zones')}</p>
+                    <p className="text-base font-black leading-none" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>{scenario.zones_affected}</p>
+                  </div>
+                  <div className="rounded-lg p-2" style={{ background: `${cfg.color}08` }}>
+                    <p className="text-xs mb-0.5" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>{t('scenarioSimulator.evacuees')}</p>
+                    <p className="text-base font-black leading-none" style={{ color: cfg.color, fontFamily: "'JetBrains Mono', monospace" }}>{(scenario.estimated_evacuees / 1000).toFixed(0)}K</p>
+                  </div>
                 </div>
               </div>
 
-              <GlowButton
-                variant={isActive ? 'ghost' : 'danger'}
-                size="sm"
-                icon={isActive ? CheckCircle : Play}
-                fullWidth
-                disabled={isActive}
-                onClick={() => setConfirming(scenario)}
-              >
-                {isActive ? 'Active' : 'Activate'}
-              </GlowButton>
+              {/* Activate button */}
+              <div className="px-5 pb-5">
+                <motion.button
+                  whileHover={!isActive && !isRunning ? { scale: 1.02, boxShadow: `0 0 20px ${cfg.color}40` } : {}}
+                  whileTap={!isActive && !isRunning ? { scale: 0.98 } : {}}
+                  disabled={isActive || isRunning}
+                  onClick={() => setConfirming(scenario)}
+                  className="w-full py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all"
+                  style={{
+                    background: isActive ? `${cfg.color}10` : `${cfg.color}20`,
+                    border: `1px solid ${isActive ? `${cfg.color}25` : `${cfg.color}50`}`,
+                    color: isActive ? `${cfg.color}80` : cfg.color,
+                    fontFamily: "'Exo 2', sans-serif",
+                    cursor: isActive || isRunning ? 'not-allowed' : 'pointer',
+                    boxShadow: !isActive && !isRunning ? `inset 0 1px 0 ${cfg.color}20` : 'none',
+                  }}
+                >
+                  {isActive ? <><CheckCircle size={14} /> {t('scenarioSimulator.active')}</> : isRunning ? <><Loader2 size={14} className="animate-spin" /> {t('scenarioSimulator.running')}...</> : <><Play size={14} /> {t('scenarioSimulator.activate')}</>}
+                </motion.button>
+              </div>
             </motion.div>
           );
         })}

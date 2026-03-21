@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Megaphone, Send, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import GlowButton from '../shared/GlowButton';
 import { formatTimeAgo } from '../../data/mockData';
 
@@ -10,18 +11,21 @@ const recentBroadcasts = [
   { msg: 'SMS Stadium shelter now operational. 500 capacity available. Food and medical aid provided.', severity: 'info', time: new Date(Date.now() - 90 * 60000).toISOString() },
 ];
 
-const severities = [
-  { key: 'info', label: 'Info', color: '#3b82f6' },
-  { key: 'warning', label: 'Warning', color: '#f59e0b' },
-  { key: 'critical', label: 'Critical', color: '#ef4444' },
-  { key: 'emergency', label: 'Emergency', color: '#9333ea' },
-];
+const SEVERITY_KEYS = ['info', 'warning', 'critical', 'emergency'];
+const SEVERITY_COLORS = { info: '#3b82f6', warning: '#f59e0b', critical: '#ef4444', emergency: '#9333ea' };
 
 export default function AlertBroadcast() {
   const [msg, setMsg] = useState('');
   const [severity, setSeverity] = useState('warning');
   const [broadcasts, setBroadcasts] = useState(recentBroadcasts);
   const [sent, setSent] = useState(false);
+  const { t } = useTranslation();
+
+  const severities = SEVERITY_KEYS.map(key => ({
+    key,
+    label: t(`alertBroadcast.severityLabels.${key}`),
+    color: SEVERITY_COLORS[key],
+  }));
 
   const handleSend = () => {
     if (!msg.trim()) return;
@@ -32,14 +36,12 @@ export default function AlertBroadcast() {
     setTimeout(() => setSent(false), 2500);
   };
 
-  const cfg = severities.find(s => s.key === severity) || severities[1];
-
   return (
     <div>
       <div className="flex items-center gap-2 mb-4">
         <Megaphone size={16} color="#ef4444" />
         <h3 className="text-sm font-bold uppercase tracking-widest" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-          Alert Broadcast
+          {t('alertBroadcast.title')}
         </h3>
       </div>
 
@@ -48,7 +50,7 @@ export default function AlertBroadcast() {
         <div className="p-5 rounded-2xl flex flex-col gap-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
           {/* Severity picker */}
           <div>
-            <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>Severity</label>
+            <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{t('alertBroadcast.severity')}</label>
             <div className="flex gap-2">
               {severities.map(s => (
                 <button
@@ -70,12 +72,12 @@ export default function AlertBroadcast() {
 
           {/* Message */}
           <div>
-            <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>Emergency Message</label>
+            <label className="text-xs uppercase tracking-widest mb-2 block" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>{t('alertBroadcast.emergencyMessage')}</label>
             <textarea
               rows={4}
               value={msg}
               onChange={e => setMsg(e.target.value)}
-              placeholder="Compose emergency broadcast message for all Jaipur residents..."
+              placeholder={t('alertBroadcast.messagePlaceholder')}
               className="w-full px-3 py-2.5 rounded-xl text-sm outline-none resize-none"
               style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: 'var(--text-primary)', fontFamily: "'Exo 2', sans-serif" }}
             />
@@ -92,12 +94,12 @@ export default function AlertBroadcast() {
                 className="py-3 rounded-xl text-center text-sm font-bold"
                 style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)', color: '#10b981', fontFamily: "'Exo 2', sans-serif" }}
               >
-                ✓ Broadcast sent to all users
+                {t('alertBroadcast.broadcastSent')}
               </motion.div>
             ) : (
               <motion.div key="btn" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <GlowButton variant="danger" size="md" icon={Send} fullWidth onClick={handleSend} disabled={!msg.trim()}>
-                  Broadcast to All Users
+                  {t('alertBroadcast.broadcastToAll')}
                 </GlowButton>
               </motion.div>
             )}
@@ -109,7 +111,7 @@ export default function AlertBroadcast() {
           <div className="flex items-center gap-2 mb-3">
             <Clock size={13} style={{ color: 'var(--text-muted)' }} />
             <span className="text-xs uppercase tracking-widest font-bold" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-              Recent Broadcasts
+              {t('alertBroadcast.recentBroadcasts')}
             </span>
           </div>
           <div className="flex flex-col gap-2">
