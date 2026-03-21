@@ -61,6 +61,14 @@ function FlyToSearch({ target }) {
   return null;
 }
 
+function FlyToShelter({ shelter }) {
+  const map = useMap();
+  useEffect(() => {
+    if (shelter) map.flyTo([shelter.lat, shelter.lng], 15, { duration: 1.4 });
+  }, [shelter, map]);
+  return null;
+}
+
 function FlyToUser({ location }) {
   const map = useMap();
   const flown = useRef(false);
@@ -100,6 +108,15 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
     return () => { alive = false; clearInterval(id); };
   }, []);
 
+  // Auto-trigger route when a shelter is selected via "Navigate"
+  useEffect(() => {
+    if (!selectedShelter) return;
+    const lat = location?.lat ?? JAIPUR_CENTER[0];
+    const lng = location?.lng ?? JAIPUR_CENTER[1];
+    requestRoute({ lat, lng, shelter_id: selectedShelter.id });
+    setLayers(prev => ({ ...prev, routes: true }));
+  }, [selectedShelter]);
+
   const toggleLayer = (key) => setLayers(prev => ({ ...prev, [key]: !prev[key] }));
 
   const handleGetRoute = async () => {
@@ -132,6 +149,7 @@ export default function EvacuationMap({ location, locationLoading, searchTarget,
 
         <FlyToUser location={location} />
         <FlyToSearch target={searchTarget} />
+        <FlyToShelter shelter={selectedShelter} />
 
         {/* User GPS marker */}
         {location && !locationLoading && (
