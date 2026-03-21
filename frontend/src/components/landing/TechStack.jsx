@@ -1,76 +1,117 @@
-const techs = [
-  { name: 'Python 3.11', color: '#3b82f6' },
-  { name: 'FastAPI', color: '#10b981' },
-  { name: 'scikit-learn', color: '#f59e0b' },
-  { name: 'NetworkX', color: '#9333ea' },
-  { name: 'React 18', color: '#3b82f6' },
-  { name: 'Tailwind CSS', color: '#06b6d4' },
-  { name: 'Framer Motion', color: '#f97316' },
-  { name: 'Leaflet', color: '#10b981' },
-  { name: 'Three.js', color: '#ffffff' },
-  { name: 'Open-Meteo', color: '#3b82f6' },
-  { name: 'OSRM', color: '#ef4444' },
-  { name: 'NetworkX', color: '#9333ea' },
-  { name: 'Recharts', color: '#f59e0b' },
-  { name: 'SQLite', color: '#10b981' },
-  { name: 'WebSocket', color: '#f97316' },
-  { name: 'GeoJSON', color: '#3b82f6' },
-  { name: 'Random Forest', color: '#10b981' },
-  { name: 'Shapely', color: '#9333ea' },
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+
+const CATEGORIES = [
+  {
+    label: 'Backend',
+    color: '#3b82f6',
+    items: ['Python 3.11', 'FastAPI', 'SQLite', 'WebSocket', 'GeoJSON', 'OSRM'],
+  },
+  {
+    label: 'ML & Data',
+    color: '#f59e0b',
+    items: ['scikit-learn', 'Random Forest', 'NetworkX', 'Shapely', 'Open-Meteo'],
+  },
+  {
+    label: 'Frontend',
+    color: '#10b981',
+    items: ['React 18', 'Tailwind CSS', 'Framer Motion', 'Leaflet', 'Recharts'],
+  },
+  {
+    label: 'Graphics',
+    color: '#9333ea',
+    items: ['Three.js', 'React Three Fiber', 'CartoDB', 'Lucide Icons'],
+  },
 ];
 
 function TechBadge({ name, color }) {
   return (
     <div
-      className="flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold tracking-wide inline-flex items-center gap-2 mx-2"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium"
       style={{
         background: `${color}10`,
-        border: `1px solid ${color}25`,
-        color,
+        border: `1px solid ${color}28`,
+        color: 'rgba(255,255,255,0.75)',
         fontFamily: "'Exo 2', sans-serif",
-        boxShadow: `0 0 12px ${color}10`,
       }}
     >
-      <span className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
       {name}
     </div>
   );
 }
 
-import { useTranslation } from 'react-i18next';
-
 export default function TechStack() {
   const { t } = useTranslation();
-  const doubled = [...techs, ...techs];
 
   return (
-    <section id="tech-stack" className="py-20 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
-      <div className="mb-12 text-center">
-        <p className="text-xs tracking-widest uppercase mb-3 font-jetbrains" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
-          {t('techStack.poweredBy')}
-        </p>
-        <h2 className="text-3xl font-bold" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
-          {t('techStack.title')}
-        </h2>
-      </div>
+    <section id="tech-stack" className="py-24 px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <p
+            className="text-xs tracking-widest uppercase mb-3"
+            style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}
+          >
+            {t('techStack.poweredBy')}
+          </p>
+          <h2
+            className="text-4xl font-bold"
+            style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}
+          >
+            {t('techStack.title')}
+          </h2>
+          <div className="flex items-center justify-center gap-4 mt-4">
+            <div className="h-px w-24 bg-gradient-to-r from-transparent to-emerald-500/40" />
+            <div className="w-2 h-2 rounded-full bg-emerald-400" />
+            <div className="h-px w-24 bg-gradient-to-l from-transparent to-emerald-500/40" />
+          </div>
+        </motion.div>
 
-      {/* Marquee row 1 */}
-      <div className="relative overflow-hidden mb-4">
-        <div className="flex" style={{ animation: 'marquee 30s linear infinite', width: 'max-content' }}>
-          {doubled.map((t, i) => <TechBadge key={i} {...t} />)}
-        </div>
-        {/* Fade edges */}
-        <div className="absolute inset-y-0 left-0 w-32 pointer-events-none" style={{ background: 'linear-gradient(90deg, var(--bg-secondary), transparent)' }} />
-        <div className="absolute inset-y-0 right-0 w-32 pointer-events-none" style={{ background: 'linear-gradient(-90deg, var(--bg-secondary), transparent)' }} />
-      </div>
+        {/* Category grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {CATEGORIES.map((cat, ci) => (
+            <motion.div
+              key={cat.label}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, delay: ci * 0.1 }}
+              className="rounded-2xl p-5 flex flex-col gap-4"
+              style={{
+                background: 'rgba(255,255,255,0.025)',
+                border: `1px solid ${cat.color}22`,
+              }}
+            >
+              {/* Category header */}
+              <div className="flex items-center gap-2.5">
+                <div
+                  className="w-2 h-6 rounded-full"
+                  style={{ background: cat.color, boxShadow: `0 0 10px ${cat.color}60` }}
+                />
+                <span
+                  className="text-xs font-bold uppercase tracking-widest"
+                  style={{ color: cat.color, fontFamily: "'JetBrains Mono', monospace" }}
+                >
+                  {cat.label}
+                </span>
+              </div>
 
-      {/* Marquee row 2 reverse */}
-      <div className="relative overflow-hidden">
-        <div className="flex" style={{ animation: 'marquee 25s linear infinite reverse', width: 'max-content' }}>
-          {[...doubled].reverse().map((t, i) => <TechBadge key={i} {...t} />)}
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2">
+                {cat.items.map((name) => (
+                  <TechBadge key={name} name={name} color={cat.color} />
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
-        <div className="absolute inset-y-0 left-0 w-32 pointer-events-none" style={{ background: 'linear-gradient(90deg, var(--bg-secondary), transparent)' }} />
-        <div className="absolute inset-y-0 right-0 w-32 pointer-events-none" style={{ background: 'linear-gradient(-90deg, var(--bg-secondary), transparent)' }} />
       </div>
     </section>
   );

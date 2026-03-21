@@ -63,11 +63,11 @@ function GlobeScene({ mouseX, mouseY }) {
   const linesMaterial = useMemo(() => new THREE.LineBasicMaterial({
     color: '#10b981',
     transparent: true,
-    opacity: 0.12,
+    opacity: 0.28,
   }), []);
 
   const gridGeometry = useMemo(() => {
-    const geo = new THREE.EdgesGeometry(new THREE.SphereGeometry(1.001, 20, 15));
+    const geo = new THREE.EdgesGeometry(new THREE.SphereGeometry(1.001, 24, 18));
     return geo;
   }, []);
 
@@ -85,21 +85,23 @@ function GlobeScene({ mouseX, mouseY }) {
 
   return (
     <>
-      <ambientLight intensity={0.3} color="#0a1628" />
-      <directionalLight position={[5, 3, 5]} intensity={0.8} color="#10b981" />
-      <directionalLight position={[-5, -3, -2]} intensity={0.4} color="#3b82f6" />
-      <pointLight position={[0, 0, 3]} intensity={0.5} color="#ffffff" />
+      <ambientLight intensity={1.2} color="#1a3a5c" />
+      <directionalLight position={[0, 0, 4]} intensity={1.4} color="#ffffff" />
+      <directionalLight position={[5, 3, 5]} intensity={0.9} color="#10b981" />
+      <directionalLight position={[-4, -2, 2]} intensity={0.5} color="#3b82f6" />
+      <pointLight position={[0, 2, 3]} intensity={0.8} color="#10b981" />
 
       {/* Globe base */}
       <mesh ref={globeRef}>
         <sphereGeometry args={[1, 64, 64]} />
         <meshPhongMaterial
-          color="#040812"
-          emissive="#0a1628"
-          emissiveIntensity={0.3}
-          shininess={20}
+          color="#0d2137"
+          emissive="#0a2a4a"
+          emissiveIntensity={0.6}
+          shininess={60}
+          specular="#10b981"
           transparent
-          opacity={0.95}
+          opacity={0.97}
         />
 
         {/* Hotspots on globe */}
@@ -117,13 +119,19 @@ function GlobeScene({ mouseX, mouseY }) {
       {/* Outer glow sphere */}
       <mesh>
         <sphereGeometry args={[1.08, 32, 32]} />
-        <meshBasicMaterial color="#10b981" transparent opacity={0.04} side={THREE.BackSide} />
+        <meshBasicMaterial color="#10b981" transparent opacity={0.09} side={THREE.BackSide} />
       </mesh>
 
       {/* Atmosphere halo */}
       <mesh>
-        <sphereGeometry args={[1.15, 32, 32]} />
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.015} side={THREE.BackSide} />
+        <sphereGeometry args={[1.18, 32, 32]} />
+        <meshBasicMaterial color="#3b82f6" transparent opacity={0.06} side={THREE.BackSide} />
+      </mesh>
+
+      {/* Outer atmosphere ring */}
+      <mesh>
+        <sphereGeometry args={[1.28, 32, 32]} />
+        <meshBasicMaterial color="#10b981" transparent opacity={0.025} side={THREE.BackSide} />
       </mesh>
     </>
   );

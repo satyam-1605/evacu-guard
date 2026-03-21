@@ -167,9 +167,9 @@ export default function HeroSection() {
 
         {/* Right: 3D Globe */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.3, ease: 'easeOut' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="flex-shrink-0 relative"
           style={{ width: 420, height: 420 }}
         >
