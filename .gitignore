@@ -33,6 +33,6 @@ backend/ml/training_data.csv
 *.sln
 *.sw?
 
-.claude
+
 .vite
 
