@@ -32,3 +32,7 @@ backend/ml/training_data.csv
 *.njsproj
 *.sln
 *.sw?
+
+.claude
+.vite
+
