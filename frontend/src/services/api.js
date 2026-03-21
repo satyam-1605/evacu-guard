@@ -12,8 +12,8 @@ import {
   mockRoute,
 } from '../data/mockData';
 
-// Use Vite proxy (relative URL) — no CORS issues. Falls back to direct URL if needed.
-const BASE_URL = '';
+// In production use VITE_API_URL env var; in dev use Vite proxy (empty string)
+const BASE_URL = import.meta.env.VITE_API_URL || '';
 
 const api = axios.create({
   baseURL: BASE_URL,
