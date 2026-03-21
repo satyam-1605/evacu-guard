@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Waves, CloudLightning, AlertTriangle, Play, CheckCircle, X } from 'lucide-react';
+import { Waves, CloudLightning, AlertTriangle, Play, CheckCircle, X, Loader2 } from 'lucide-react';
 import { mockScenarios } from '../../data/mockData';
 import GlowButton from '../shared/GlowButton';
+import { activateScenario } from '../../services/api';
 
 const iconMap = { monsoon_flood: Waves, cloudburst: CloudLightning, multi_hazard: AlertTriangle };
 const accentMap = {
@@ -60,21 +61,28 @@ export default function ScenarioSimulator() {
   const [confirming, setConfirming] = useState(null);
   const [active, setActive] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [apiStatus, setApiStatus] = useState(null); // 'live' | 'simulated' | null
 
-  const handleActivate = (scenario) => {
+  const handleActivate = async (scenario) => {
     setConfirming(null);
     setActive(scenario);
     setProgress(0);
+    setApiStatus(null);
 
+    // Animate progress bar over scenario duration
+    const totalMs = scenario.duration_sec * 1000;
+    const stepMs = 200;
+    const increment = (stepMs / totalMs) * 100;
     const interval = setInterval(() => {
       setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 2;
+        if (prev >= 100) { clearInterval(interval); return 100; }
+        return Math.min(prev + increment, 100);
       });
-    }, scenario.duration_sec * 10);
+    }, stepMs);
+
+    // Call real backend API
+    const result = await activateScenario(scenario.id);
+    setApiStatus(result.status === 'activated' ? 'live' : 'simulated');
   };
 
   return (
@@ -83,8 +91,16 @@ export default function ScenarioSimulator() {
         <h3 className="text-sm font-bold uppercase tracking-widest" style={{ fontFamily: "'Orbitron', sans-serif", color: 'var(--text-primary)' }}>
           Scenario Simulator
         </h3>
-        <span className="text-xs px-2 py-1 rounded-lg" style={{ background: 'rgba(147,51,234,0.1)', color: '#9333ea', border: '1px solid rgba(147,51,234,0.2)', fontFamily: "'JetBrains Mono', monospace" }}>
-          DEMO MODE
+        <span
+          className="text-xs px-2 py-1 rounded-lg"
+          style={{
+            background: apiStatus === 'live' ? 'rgba(16,185,129,0.1)' : 'rgba(147,51,234,0.1)',
+            color: apiStatus === 'live' ? '#10b981' : '#9333ea',
+            border: `1px solid ${apiStatus === 'live' ? 'rgba(16,185,129,0.2)' : 'rgba(147,51,234,0.2)'}`,
+            fontFamily: "'JetBrains Mono', monospace",
+          }}
+        >
+          {apiStatus === 'live' ? '● LIVE' : apiStatus === 'simulated' ? 'SIMULATED' : 'READY'}
         </span>
       </div>
 
@@ -111,7 +127,9 @@ export default function ScenarioSimulator() {
               />
             </div>
             <p className="text-xs mt-2" style={{ color: 'var(--text-muted)', fontFamily: "'Exo 2', sans-serif" }}>
-              Escalating {active.zones_affected} zones progressively...
+              {apiStatus === 'live'
+                ? `⚡ Live — escalating ${active.zones_affected} zones, broadcasting WebSocket alerts...`
+                : `Simulating ${active.zones_affected} zone escalations...`}
             </p>
           </motion.div>
         )}

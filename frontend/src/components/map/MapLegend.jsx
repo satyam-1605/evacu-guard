@@ -6,6 +6,8 @@ export default function MapLegend() {
     { color: '#ef4444', label: 'Critical', dot: true },
     { color: '#10b981', label: 'Shelter', icon: 'S' },
     { color: '#3b82f6', label: 'Route', line: true },
+    { color: '#ef4444', label: 'Blocked Road', icon: '✕' },
+    { color: '#3b82f6', label: 'You', dot: true },
   ];
 
   return (

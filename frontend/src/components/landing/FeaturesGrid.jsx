@@ -211,7 +211,7 @@ const features = [
 
 export default function FeaturesGrid() {
   return (
-    <section className="py-28 px-6" style={{ background: 'var(--bg-primary)' }}>
+    <section id="features" className="py-28 px-6" style={{ background: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

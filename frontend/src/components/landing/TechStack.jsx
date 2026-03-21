@@ -41,7 +41,7 @@ export default function TechStack() {
   const doubled = [...techs, ...techs];
 
   return (
-    <section className="py-20 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+    <section id="tech-stack" className="py-20 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
       <div className="mb-12 text-center">
         <p className="text-xs tracking-widest uppercase mb-3 font-jetbrains" style={{ color: 'var(--text-muted)', fontFamily: "'JetBrains Mono', monospace" }}>
           — Powered by —

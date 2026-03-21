@@ -115,7 +115,7 @@ export async function upsertHazard(hazardData) {
 
 export async function activateScenario(scenarioId) {
   try {
-    const { data } = await api.post('/api/admin/scenario', { scenario_id: scenarioId });
+    const { data } = await api.post('/api/admin/scenario', { scenario: scenarioId });
     return data;
   } catch (err) {
     console.warn('Scenario activation fallback:', err.message);

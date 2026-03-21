@@ -44,7 +44,7 @@ const itemVariants = {
 
 export default function HowItWorks() {
   return (
-    <section className="relative py-28 px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+    <section id="how-it-works" className="relative py-28 px-6 overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
       {/* Grid background */}
       <div className="absolute inset-0 grid-bg opacity-30 pointer-events-none" />
 

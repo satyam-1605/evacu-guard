@@ -8,10 +8,12 @@ import TypewriterText from './TypewriterText';
 import ParticleBackground from './ParticleBackground';
 import StatCounter from './StatCounter';
 import GlowButton from '../shared/GlowButton';
+import { useLocation } from '../../hooks/useLocation';
 
 export default function HeroSection() {
   const navigate = useNavigate();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const { location } = useLocation();
   const heroRef = useRef(null);
 
   const handleMouseMove = useCallback((e) => {
@@ -125,7 +127,12 @@ export default function HeroSection() {
           >
             <MapPin size={14} color="#10b981" />
             <span className="text-sm font-jetbrains" style={{ color: '#10b981', fontFamily: "'JetBrains Mono', monospace" }}>
-              26.9124°N, 75.7873°E — Jaipur, Rajasthan
+              {location
+                ? location.isFallback
+                  ? '26.9124°N, 75.7873°E — Jaipur, Rajasthan'
+                  : `${location.lat.toFixed(4)}°N, ${location.lng.toFixed(4)}°E — Your Location`
+                : '26.9124°N, 75.7873°E — Jaipur, Rajasthan'
+              }
             </span>
           </motion.div>
 
